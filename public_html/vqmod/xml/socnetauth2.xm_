@@ -1,0 +1,962 @@
+<modification>
+	<id>Socnetauth2 module</id>
+	<version>1.0</version>
+	<vqmver>1.0.0</vqmver>
+	<author>kin</author>
+	<file name="CanMoTadLog!n/controller/common/footer.php">
+		<operation>
+			<search position="after"><![CDATA[$this->data['text_footer'] = sprintf($this->language->get('text_footer'), VERSION);]]></search>
+			<add><![CDATA[
+			if( 
+			!empty( $this->request->get['route'] ) && 
+			(
+				$this->request->get['route']=='sale/customer/update' ||
+				$this->request->get['route']=='sale/order/info' ||
+				$this->request->get['route']=='sale/order/update' ||
+				$this->request->get['route']=='sale/customer' ||
+				$this->request->get['route']=='sale/order'
+			)
+			)
+			{
+				$this->load->model('sale/customer');
+				$this->load->model('module/socnetauth2');
+				$data =	$this->model_module_socnetauth2->showData();
+			
+				$this->data['text_footer'] .= $data;
+			}
+			]]></add>
+		</operation>
+	</file>
+	<file name="catalog/view/theme/*/template/checkout/login.tpl" error="skip">
+		<ignoreif><![CDATA[<?php echo $SOCNETAUTH2_CODE; ?>]]></ignoreif>
+		<operation error="skip">
+			<search position="after"><![CDATA[<h2><?php echo $text_returning_customer; ?></h2>]]></search>
+			<add><![CDATA[<?php /* start socnetauth2 */
+		if( !empty($this->request->get['socnetauth2close']) )
+		{
+			$this->session->data['socnetauth2_confirmdata_show'] = 0;
+		}
+		
+	$SOCNETAUTH2_CODE = '';
+	if( $this->config->get('socnetauth2_status') )
+	{
+		$http = 'http://';
+		if( $this->config->get('socnetauth2_protokol') == 'detect' )
+		{
+			if( 
+				( isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ) || 
+				!empty($_SERVER['HTTPS']) 
+				|| ( !empty($_SERVER['HTTP_CF_VISITOR']) && strstr($_SERVER['HTTP_CF_VISITOR'], "https") )	
+			)
+				$http = 'https://';
+			else
+				$http = 'http://';
+		}
+		else
+			$http = $this->config->get('socnetauth2_protokol'). '://';
+		 
+	
+		$this->session->data['socnetauth2_lastlink'] = $http.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+		$this->session->data['socnetauth2_lastlink'] = str_replace("checkout/login", "checkout/checkout", $this->session->data['socnetauth2_lastlink']);
+
+		if( !$this->customer->isLogged() ) 
+		{
+			/* start 2105 */
+			$socnetauth2_code = unserialize( $this->config->get('socnetauth2_checkout_code_'.$this->config->get('socnetauth2_account_format')) );
+			$socnetauth2_code = html_entity_decode($socnetauth2_code[ $this->config->get("config_language_id") ]);
+			
+			$socnetauth2_shop_folder = '';
+			if( $this->config->get('socnetauth2_shop_folder') )
+				$socnetauth2_shop_folder = '/'.$this->config->get('socnetauth2_shop_folder');
+			
+			$redirect_url = $http.$_SERVER['HTTP_HOST'].$socnetauth2_shop_folder.'/socnetauth2/loginza.php';
+			$redirect_url = urlencode($redirect_url);
+			
+			$socnetauth2_code = str_replace("#redirect_url#", $redirect_url, $socnetauth2_code);
+			/* end 2105 */
+			
+			
+			$socnetauth2_label = '';
+			
+			if( 
+				$this->config->get('socnetauth2_label') && !is_array( $this->config->get('socnetauth2_label') ) &&
+				stristr($this->config->get('socnetauth2_label'), '{' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), '}' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), ';' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), ':' ) != false
+			)
+			{
+				$socnetauth2_label = unserialize($this->config->get('socnetauth2_label'));
+			}
+			else
+			{
+				$socnetauth2_label = $this->config->get('socnetauth2_label');
+			}
+	
+	
+			if( !empty($socnetauth2_label[ $this->config->get('config_language_id') ]) )
+			{
+				$socnetauth2_code = str_replace("#socnetauth2_label#", 
+								'<div class="checkout_socnetauth2_'.$this->config->get('socnetauth2_checkout_format').'_header">'.$socnetauth2_label[ $this->config->get('config_language_id') ]."</div>", 
+								$socnetauth2_code );
+			}
+			else
+			{
+				$socnetauth2_code = str_replace("#socnetauth2_label#", "", $socnetauth2_code );
+			}
+			
+			$SOCNETAUTH2_CODE = $socnetauth2_code;
+		} 
+	}
+/* end socnetauth2 */ ?>
+			<?php /* start socnetauth2 code */ ?>
+<table>
+		<tr>
+		<td>
+<?php /* end socnetauth2 code */ ?> 
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<ignoreif><![CDATA[<?php echo $SOCNETAUTH2_CODE; ?>]]></ignoreif>
+			<search position="after"><![CDATA[<input type="button" value="<?php echo $button_login; ?>" id="button-login" class="button" />]]></search>
+			<add><![CDATA[ 
+			<?php /* start socnetauth code */ ?>			
+<?php if( $this->config->get('socnetauth2_status') && 
+		  $this->config->get('socnetauth2_checkout_format')=='kvadrat' ) { ?>
+
+		  </td>
+		  <td>
+				<?php echo $SOCNETAUTH2_CODE; ?>
+		  </td>
+		   </tr>
+		</table><?php } ?></div><div>
+		<?php /* start socnetauth2 code */ ?>
+<?php if( $this->config->get('socnetauth2_status') && 
+		  ($this->config->get('socnetauth2_checkout_format')=='bline' || 
+		   $this->config->get('socnetauth2_checkout_format')=='lline'
+		  ) ) { ?>
+		  
+		  <?php echo $SOCNETAUTH2_CODE; ?>
+		  
+<?php } ?>
+<?php /* end socnetauth2 code */ ?> 
+			
+			
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/view/theme/*/template/account/login.tpl" error="skip">
+		<operation error="skip">
+			<ignoreif><![CDATA[echo $SOCNETAUTH2_CODE;]]></ignoreif>
+			<search position="after"><![CDATA[<input type="submit" value="<?php echo $button_login; ?>" class="button" />]]></search>
+			<add><![CDATA[ <?php
+			/* start socnetauth2 */
+			if( !empty($this->request->get['socnetauth2close']) )
+		{
+			$this->session->data['socnetauth2_confirmdata_show'] = 0;
+		}
+			if( $this->config->get('socnetauth2_status') )
+	{
+		if( !$this->customer->isLogged() ) 
+		{			
+			
+			$http = 'http://';
+			if( $this->config->get('socnetauth2_protokol') == 'detect' )
+			{
+				if( 
+					( isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ) || 
+					!empty($_SERVER['HTTPS']) 
+					|| ( !empty($_SERVER['HTTP_CF_VISITOR']) && strstr($_SERVER['HTTP_CF_VISITOR'], "https") )	
+				)
+					$http = 'https://';
+				else
+					$http = 'http://';
+			}
+			else
+				$http = $this->config->get('socnetauth2_protokol'). '://';
+	
+			$this->session->data['socnetauth2_lastlink'] = $http.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+			$this->session->data['socnetauth2_lastlink'] = str_replace("checkout/login", "checkout/checkout", $this->session->data['socnetauth2_lastlink']);
+
+			/* start 2105 */
+			$socnetauth2_code = unserialize( $this->config->get('socnetauth2_account_code_'.$this->config->get('socnetauth2_account_format')) );
+			$socnetauth2_code = html_entity_decode($socnetauth2_code[ $this->config->get("config_language_id") ]);
+			
+			$socnetauth2_shop_folder = '';
+			if( $this->config->get('socnetauth2_shop_folder') )
+				$socnetauth2_shop_folder = '/'.$this->config->get('socnetauth2_shop_folder');
+			
+			$redirect_url = $http.$_SERVER['HTTP_HOST'].$socnetauth2_shop_folder.'/socnetauth2/loginza.php';
+			$redirect_url = urlencode($redirect_url);
+			
+			$socnetauth2_code = str_replace("#redirect_url#", $redirect_url, $socnetauth2_code);
+			/* end 2105 */
+			
+			$socnetauth2_label = '';
+			
+			if( 
+				$this->config->get('socnetauth2_label') && !is_array( $this->config->get('socnetauth2_label') ) &&
+				stristr($this->config->get('socnetauth2_label'), '{' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), '}' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), ';' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), ':' ) != false
+			)
+			{
+				$socnetauth2_label = unserialize($this->config->get('socnetauth2_label'));
+			}
+			else
+			{
+				$socnetauth2_label = $this->config->get('socnetauth2_label');
+			}
+	
+	
+			if( !empty($socnetauth2_label[ $this->config->get('config_language_id') ]) )
+			{
+				$socnetauth2_code = str_replace("#socnetauth2_label#", 
+								'<div class="account_socnetauth2_'.$this->config->get('socnetauth2_account_format').'_header">'.$socnetauth2_label[ $this->config->get('config_language_id') ]."</div>", 
+								$socnetauth2_code );
+			}
+			else
+			{
+				$socnetauth2_code = str_replace("#socnetauth2_label#", "", $socnetauth2_code );
+			}
+			
+			$SOCNETAUTH2_CODE = $socnetauth2_code;
+			
+			echo $SOCNETAUTH2_CODE;
+		} 
+	}
+/* end socnetauth2 */ ?>
+
+		]]></add>
+		</operation>
+	
+	
+		<operation error="skip">
+			<ignoreif><![CDATA[echo $SOCNETAUTH2_CODE;]]></ignoreif>
+			<search position="before"><![CDATA[<h3><?php echo $text_new_customer; ?></h3>]]></search>
+			<add><![CDATA[ <?php
+			/* start socnetauth2 */
+			if( !empty($this->request->get['socnetauth2close']) )
+		{
+			$this->session->data['socnetauth2_confirmdata_show'] = 0;
+		}
+			if( $this->config->get('socnetauth2_status') )
+	{
+		if( !$this->customer->isLogged() ) 
+		{			
+			
+			$http = 'http://';
+			if( $this->config->get('socnetauth2_protokol') == 'detect' )
+			{
+				if( 
+					( isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ) || 
+					!empty($_SERVER['HTTPS']) 
+					|| ( !empty($_SERVER['HTTP_CF_VISITOR']) && strstr($_SERVER['HTTP_CF_VISITOR'], "https") )	
+				)
+					$http = 'https://';
+				else
+					$http = 'http://';
+			}
+			else
+				$http = $this->config->get('socnetauth2_protokol'). '://';
+	
+			$this->session->data['socnetauth2_lastlink'] = $http.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+			$this->session->data['socnetauth2_lastlink'] = str_replace("checkout/login", "checkout/checkout", $this->session->data['socnetauth2_lastlink']);
+
+			/* start 2105 */
+			$socnetauth2_code = unserialize( $this->config->get('socnetauth2_account_code_'.$this->config->get('socnetauth2_account_format')) );
+			$socnetauth2_code = html_entity_decode($socnetauth2_code[ $this->config->get("config_language_id") ]);
+			
+			$socnetauth2_shop_folder = '';
+			if( $this->config->get('socnetauth2_shop_folder') )
+				$socnetauth2_shop_folder = '/'.$this->config->get('socnetauth2_shop_folder');
+			
+			$redirect_url = $http.$_SERVER['HTTP_HOST'].$socnetauth2_shop_folder.'/socnetauth2/loginza.php';
+			$redirect_url = urlencode($redirect_url);
+			
+			$socnetauth2_code = str_replace("#redirect_url#", $redirect_url, $socnetauth2_code);
+			/* end 2105 */
+			
+			$socnetauth2_label = '';
+			
+			if( 
+				$this->config->get('socnetauth2_label') && !is_array( $this->config->get('socnetauth2_label') ) &&
+				stristr($this->config->get('socnetauth2_label'), '{' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), '}' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), ';' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), ':' ) != false
+			)
+			{
+				$socnetauth2_label = unserialize($this->config->get('socnetauth2_label'));
+			}
+			else
+			{
+				$socnetauth2_label = $this->config->get('socnetauth2_label');
+			}
+	
+	
+			if( !empty($socnetauth2_label[ $this->config->get('config_language_id') ]) )
+			{
+				$socnetauth2_code = str_replace("#socnetauth2_label#", 
+								'<div class="account_socnetauth2_'.$this->config->get('socnetauth2_account_format').'_header">'.$socnetauth2_label[ $this->config->get('config_language_id') ]."</div>", 
+								$socnetauth2_code );
+			}
+			else
+			{
+				$socnetauth2_code = str_replace("#socnetauth2_label#", "", $socnetauth2_code );
+			}
+			
+			$SOCNETAUTH2_CODE = $socnetauth2_code;
+			
+			echo $SOCNETAUTH2_CODE;
+		} 
+	}
+/* end socnetauth2 */ ?>
+
+		]]></add>
+		</operation>
+	
+	
+	
+		<operation error="skip">
+			<ignoreif><![CDATA[echo $SOCNETAUTH2_CODE;]]></ignoreif>
+			<search position="before"><![CDATA[<p><?php echo $text_i_am_returning_customer; ?></p>]]></search>
+			<add><![CDATA[ <?php
+			/* start socnetauth2 */
+			if( !empty($this->request->get['socnetauth2close']) )
+		{
+			$this->session->data['socnetauth2_confirmdata_show'] = 0;
+		}
+			if( $this->config->get('socnetauth2_status') )
+	{
+		if( !$this->customer->isLogged() ) 
+		{			 	
+			$http = 'http://';
+			if( $this->config->get('socnetauth2_protokol') == 'detect' )
+			{
+				if( 
+					( isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ) || 
+					!empty($_SERVER['HTTPS']) 
+					|| ( !empty($_SERVER['HTTP_CF_VISITOR']) && strstr($_SERVER['HTTP_CF_VISITOR'], "https") )	
+				)
+					$http = 'https://';
+				else
+					$http = 'http://';
+			}
+			else
+				$http = $this->config->get('socnetauth2_protokol'). '://';
+
+			$this->session->data['socnetauth2_lastlink'] = $http.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+			$this->session->data['socnetauth2_lastlink'] = str_replace("checkout/login", "checkout/checkout", $this->session->data['socnetauth2_lastlink']);
+
+
+			/* start 2105 */
+			$socnetauth2_code = unserialize( $this->config->get('socnetauth2_account_code_'.$this->config->get('socnetauth2_account_format')) );
+			$socnetauth2_code = html_entity_decode($socnetauth2_code[ $this->config->get("config_language_id") ]);
+			
+			$socnetauth2_shop_folder = '';
+			if( $this->config->get('socnetauth2_shop_folder') )
+				$socnetauth2_shop_folder = '/'.$this->config->get('socnetauth2_shop_folder');
+			
+			$redirect_url = $http.$_SERVER['HTTP_HOST'].$socnetauth2_shop_folder.'/socnetauth2/loginza.php';
+			$redirect_url = urlencode($redirect_url);
+			
+			$socnetauth2_code = str_replace("#redirect_url#", $redirect_url, $socnetauth2_code);
+			/* end 2105 */
+			
+			$socnetauth2_label = '';
+			
+			if( 
+				$this->config->get('socnetauth2_label') && !is_array( $this->config->get('socnetauth2_label') ) &&
+				stristr($this->config->get('socnetauth2_label'), '{' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), '}' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), ';' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), ':' ) != false
+			)
+			{
+				$socnetauth2_label = unserialize($this->config->get('socnetauth2_label'));
+			}
+			else
+			{
+				$socnetauth2_label = $this->config->get('socnetauth2_label');
+			}
+	
+	
+			if( !empty($socnetauth2_label[ $this->config->get('config_language_id') ]) )
+			{
+				$socnetauth2_code = str_replace("#socnetauth2_label#", 
+								'<div class="account_socnetauth2_'.$this->config->get('socnetauth2_account_format').'_header">'.$socnetauth2_label[ $this->config->get('config_language_id') ]."</div>", 
+								$socnetauth2_code );
+			}
+			else
+			{
+				$socnetauth2_code = str_replace("#socnetauth2_label#", "", $socnetauth2_code );
+			}
+			
+			$SOCNETAUTH2_CODE = $socnetauth2_code;
+		} 
+	}
+/* end socnetauth2 */ ?>
+			
+			<?php /* start socnetauth2 code */ ?>
+<?php if( $this->config->get('socnetauth2_status') && 
+		  $this->config->get('socnetauth2_account_format')=='kvadrat' ) { ?>
+		<table>
+		<tr>
+		<td>
+<?php } ?>
+<?php /* end socnetauth2 code */ ?> 
+		]]></add>
+		</operation>
+		<operation error="skip">
+			<ignoreif><![CDATA[echo $SOCNETAUTH2_CODE;]]></ignoreif>
+			<search position="before"><![CDATA[<?php if ($redirect) { ?>]]></search>
+			<add><![CDATA[
+			
+			<?php /* start socnetauth code */ ?>			
+<?php if( $this->config->get('socnetauth2_status') && 
+		  $this->config->get('socnetauth2_account_format')=='kvadrat' ) { ?>
+
+		  </td>
+		  <td>
+				<?php echo $SOCNETAUTH2_CODE; ?>
+		  </td>
+		   </tr>
+		</table>
+<?php } ?>
+<?php /* end socnetauth2 code */ ?> 
+			
+			
+			]]></add>
+		</operation>
+		
+		<operation error="skip">
+			<ignoreif><![CDATA[echo $SOCNETAUTH2_CODE;]]></ignoreif>
+			<search position="before"><![CDATA[</form>]]></search>
+			<add><![CDATA[
+		
+<?php /* start socnetauth2 code */ ?>
+<?php if( $this->config->get('socnetauth2_status') && 
+		  ($this->config->get('socnetauth2_account_format')=='bline' || 
+		   $this->config->get('socnetauth2_account_format')=='lline'
+		  ) ) { ?>
+		  
+		  <?php echo $SOCNETAUTH2_CODE; ?>
+		  
+<?php } ?>
+<?php /* end socnetauth2 code */ ?> 
+		
+			]]></add>
+		</operation>		
+	</file>	
+	
+	
+	
+	<file name="catalog/view/theme/*/template/account/register.tpl" error="skip">
+		<operation  error="skip">
+			<ignoreif><![CDATA[socnetauth2]]></ignoreif>
+			<search position="after"><![CDATA[<p><?php echo $text_account_already; ?></p>]]></search>
+			<add><![CDATA[
+			<?php	/* start socnetauth2 */
+		if( !empty($this->request->get['socnetauth2close']) )
+		{
+			$this->session->data['socnetauth2_confirmdata_show'] = 0;
+		}
+		$SOCNETAUTH2_CODE = '';
+	if( $this->config->get('socnetauth2_status') )
+	{
+		$http = 'http://';
+		if( $this->config->get('socnetauth2_protokol') == 'detect' )
+		{
+			if( 
+				( isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ) || 
+				!empty($_SERVER['HTTPS']) 
+				|| ( !empty($_SERVER['HTTP_CF_VISITOR']) && strstr($_SERVER['HTTP_CF_VISITOR'], "https") )	
+			)
+				$http = 'https://';
+			else
+				$http = 'http://';
+		}
+		else
+			$http = $this->config->get('socnetauth2_protokol'). '://';
+			
+		$this->session->data['socnetauth2_lastlink'] = $http.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+		$this->session->data['socnetauth2_lastlink'] = str_replace("checkout/login", "checkout/checkout", $this->session->data['socnetauth2_lastlink']);
+
+		if( !$this->customer->isLogged() ) 
+		{	
+			/* start 2105 */
+			$socnetauth2_code = unserialize( $this->config->get('socnetauth2_reg_code_'.$this->config->get('socnetauth2_account_format')) );
+			$socnetauth2_code = html_entity_decode($socnetauth2_code[ $this->config->get("config_language_id") ]);
+			
+			$socnetauth2_shop_folder = '';
+			if( $this->config->get('socnetauth2_shop_folder') )
+				$socnetauth2_shop_folder = '/'.$this->config->get('socnetauth2_shop_folder');
+			
+			$redirect_url = $http.$_SERVER['HTTP_HOST'].$socnetauth2_shop_folder.'/socnetauth2/loginza.php';
+			$redirect_url = urlencode($redirect_url);
+			
+			$socnetauth2_code = str_replace("#redirect_url#", $redirect_url, $socnetauth2_code);
+			/* end 2105 */
+			
+			$socnetauth2_label = '';
+			
+			if( 
+				$this->config->get('socnetauth2_label') && !is_array( $this->config->get('socnetauth2_label') ) &&
+				stristr($this->config->get('socnetauth2_label'), '{' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), '}' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), ';' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), ':' ) != false
+			)
+			{
+				$socnetauth2_label = unserialize($this->config->get('socnetauth2_label'));
+			}
+			else
+			{
+				$socnetauth2_label = $this->config->get('socnetauth2_label');
+			}
+	
+	
+			if( !empty($socnetauth2_label[ $this->config->get('config_language_id') ]) )
+			{
+				$socnetauth2_code = str_replace("#socnetauth2_label#", 
+								'<div class="reg_socnetauth2_'.$this->config->get('socnetauth2_reg_format').'_header">'.$socnetauth2_label[ $this->config->get('config_language_id') ]."</div>", 
+								$socnetauth2_code );
+			}
+			else
+			{
+				$socnetauth2_code = str_replace("#socnetauth2_label#", "", $socnetauth2_code );
+			}
+			
+			$SOCNETAUTH2_CODE = $socnetauth2_code;
+			echo $SOCNETAUTH2_CODE;
+		} 
+	}
+/* end socnetauth2 */ ?>
+			]]></add>
+		</operation>
+	</file>	
+	
+	
+	
+	<file name="catalog/view/theme/*/template/account/simpleregister.tpl" error="skip">
+	
+		<operation  error="skip">
+			<ignoreif><![CDATA[socnetauth2]]></ignoreif>
+			<search position="after"><![CDATA[<?php if ($simple_registration_agreement_checkbox) { ?><label><input type="checkbox" name="agree" value="1" <?php if ($agree == 1) { ?>checked="checked"<?php } ?> /><?php echo $text_agree; ?></label>&nbsp;<?php } ?><a onclick="$('#simple_create_account').val(1);$('#simpleregister').submit();" class="button btn"><span>Зарегистрироваться</span></a>]]></search>
+			<add><![CDATA[
+			<?php	/* start socnetauth2 */
+		if( !empty($this->request->get['socnetauth2close']) )
+		{
+			$this->session->data['socnetauth2_confirmdata_show'] = 0;
+		}
+		$SOCNETAUTH2_CODE = '';
+	if( $this->config->get('socnetauth2_status') )
+	{
+	
+		$http = 'http://';
+		if( $this->config->get('socnetauth2_protokol') == 'detect' )
+		{
+			if( 
+				( isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ) || 
+				!empty($_SERVER['HTTPS']) 
+				|| ( !empty($_SERVER['HTTP_CF_VISITOR']) && strstr($_SERVER['HTTP_CF_VISITOR'], "https") )	
+			)
+				$http = 'https://';
+			else
+				$http = 'http://';
+		}
+		else
+			$http = $this->config->get('socnetauth2_protokol'). '://';
+			
+		$this->session->data['socnetauth2_lastlink'] = $http.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+		$this->session->data['socnetauth2_lastlink'] = str_replace("checkout/login", "checkout/checkout", $this->session->data['socnetauth2_lastlink']);
+
+		if( !$this->customer->isLogged() ) 
+		{		
+
+			/* start 2105 */
+			$socnetauth2_code = unserialize( $this->config->get('socnetauth2_reg_code_'.$this->config->get('socnetauth2_account_format')) );
+			$socnetauth2_code = html_entity_decode($socnetauth2_code[ $this->config->get("config_language_id") ]);
+			
+			$socnetauth2_shop_folder = '';
+			if( $this->config->get('socnetauth2_shop_folder') )
+				$socnetauth2_shop_folder = '/'.$this->config->get('socnetauth2_shop_folder');
+			
+			$redirect_url = $http.$_SERVER['HTTP_HOST'].$socnetauth2_shop_folder.'/socnetauth2/loginza.php';
+			$redirect_url = urlencode($redirect_url);
+			
+			$socnetauth2_code = str_replace("#redirect_url#", $redirect_url, $socnetauth2_code);
+			/* end 2105 */
+			
+			$socnetauth2_label = '';
+			
+			if( 
+				$this->config->get('socnetauth2_label') && !is_array( $this->config->get('socnetauth2_label') ) &&
+				stristr($this->config->get('socnetauth2_label'), '{' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), '}' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), ';' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), ':' ) != false
+			)
+			{
+				$socnetauth2_label = unserialize($this->config->get('socnetauth2_label'));
+			}
+			else
+			{
+				$socnetauth2_label = $this->config->get('socnetauth2_label');
+			}
+	
+	
+			if( !empty($socnetauth2_label[ $this->config->get('config_language_id') ]) )
+			{
+				$socnetauth2_code = str_replace("#socnetauth2_label#", 
+								'<div class="reg_socnetauth2_'.$this->config->get('socnetauth2_reg_format').'_header">'.$socnetauth2_label[ $this->config->get('config_language_id') ]."</div>", 
+								$socnetauth2_code );
+			}
+			else
+			{
+				$socnetauth2_code = str_replace("#socnetauth2_label#", "", $socnetauth2_code );
+			}
+			
+			$SOCNETAUTH2_CODE = $socnetauth2_code;
+			echo $SOCNETAUTH2_CODE;
+		} 
+	}
+/* end socnetauth2 */ ?>
+			]]></add>
+		</operation>
+	
+		<operation  error="skip">
+			<ignoreif><![CDATA[socnetauth2]]></ignoreif>
+			<search position="after"><![CDATA[<input type="submit" value="Войти" class="button" /><br /><br />]]></search>
+			<add><![CDATA[
+				<?php /* start socnetauth2 */ ?>
+				<?php echo $SOCNETAUTH2_CODE; ?>
+				<?php /* end socnetauth2 */ ?>
+			]]></add>
+		</operation>
+	
+		<operation  error="skip">
+			<ignoreif><![CDATA[socnetauth2]]></ignoreif>
+			<search position="after"><![CDATA[$text_account_already]]></search>
+			<add><![CDATA[
+			<?php	/* start socnetauth2 */
+		if( !empty($this->request->get['socnetauth2close']) )
+		{
+			$this->session->data['socnetauth2_confirmdata_show'] = 0;
+		}
+		$SOCNETAUTH2_CODE = '';
+	if( $this->config->get('socnetauth2_status') )
+	{
+	
+		$http = 'http://';
+		if( $this->config->get('socnetauth2_protokol') == 'detect' )
+		{
+			if( 
+				( isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ) || 
+				!empty($_SERVER['HTTPS']) 
+				|| ( !empty($_SERVER['HTTP_CF_VISITOR']) && strstr($_SERVER['HTTP_CF_VISITOR'], "https") )	
+			)
+				$http = 'https://';
+			else
+				$http = 'http://';
+		}
+		else
+			$http = $this->config->get('socnetauth2_protokol'). '://';
+			
+		$this->session->data['socnetauth2_lastlink'] = $http.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+		$this->session->data['socnetauth2_lastlink'] = str_replace("checkout/login", "checkout/checkout", $this->session->data['socnetauth2_lastlink']);
+
+		if( !$this->customer->isLogged() ) 
+		{	
+			/* start 2105 */
+			$socnetauth2_code = unserialize( $this->config->get('socnetauth2_reg_code_'.$this->config->get('socnetauth2_account_format')) );
+			$socnetauth2_code = html_entity_decode($socnetauth2_code[ $this->config->get("config_language_id") ]);
+			
+			$socnetauth2_shop_folder = '';
+			if( $this->config->get('socnetauth2_shop_folder') )
+				$socnetauth2_shop_folder = '/'.$this->config->get('socnetauth2_shop_folder');
+			
+			$redirect_url = $http.$_SERVER['HTTP_HOST'].$socnetauth2_shop_folder.'/socnetauth2/loginza.php';
+			$redirect_url = urlencode($redirect_url);
+			
+			$socnetauth2_code = str_replace("#redirect_url#", $redirect_url, $socnetauth2_code);
+			/* end 2105 */
+			
+			$socnetauth2_label = '';
+			
+			if( 
+				$this->config->get('socnetauth2_label') && !is_array( $this->config->get('socnetauth2_label') ) &&
+				stristr($this->config->get('socnetauth2_label'), '{' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), '}' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), ';' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), ':' ) != false
+			)
+			{
+				$socnetauth2_label = unserialize($this->config->get('socnetauth2_label'));
+			}
+			else
+			{
+				$socnetauth2_label = $this->config->get('socnetauth2_label');
+			}
+	
+	
+			if( !empty($socnetauth2_label[ $this->config->get('config_language_id') ]) )
+			{
+				$socnetauth2_code = str_replace("#socnetauth2_label#", 
+								'<div class="reg_socnetauth2_'.$this->config->get('socnetauth2_reg_format').'_header">'.$socnetauth2_label[ $this->config->get('config_language_id') ]."</div>", 
+								$socnetauth2_code );
+			}
+			else
+			{
+				$socnetauth2_code = str_replace("#socnetauth2_label#", "", $socnetauth2_code );
+			}
+			
+			$SOCNETAUTH2_CODE = $socnetauth2_code;
+			echo $SOCNETAUTH2_CODE;
+		} 
+	}
+/* end socnetauth2 */ ?>
+			]]></add>
+		</operation>
+	</file>	
+	
+	
+	<file name="catalog/view/theme/*/template/checkout/simplecheckout_customer.tpl" error="skip">
+		<operation  error="skip">
+			<ignoreif><![CDATA[socnetauth2]]></ignoreif>
+			<search position="after"><![CDATA[<div class="simplecheckout-block-content" <?php echo $simple_customer_hide_if_logged ? 'style="display:none"' : '' ?>>]]></search>
+			<add><![CDATA[
+		<?php	/* start socnetauth2 */
+		if( !empty($this->request->get['socnetauth2close']) )
+		{
+			$this->session->data['socnetauth2_confirmdata_show'] = 0;
+		}
+		$SOCNETAUTH2_CODE = '';
+	if( $this->config->get('socnetauth2_status') )
+	{
+	
+		$http = 'http://';
+		if( $this->config->get('socnetauth2_protokol') == 'detect' )
+		{
+			if( 
+				( isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ) || 
+				!empty($_SERVER['HTTPS']) 
+				|| ( !empty($_SERVER['HTTP_CF_VISITOR']) && strstr($_SERVER['HTTP_CF_VISITOR'], "https") )	
+			)
+				$http = 'https://';
+			else
+				$http = 'http://';
+		}
+		else
+			$http = $this->config->get('socnetauth2_protokol'). '://';
+			
+		$this->session->data['socnetauth2_lastlink'] = $http.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+		$this->session->data['socnetauth2_lastlink'] = str_replace("checkout/login", "checkout/checkout", $this->session->data['socnetauth2_lastlink']);
+
+		if( !$this->customer->isLogged() ) 
+		{	
+
+			/* start 2105 */
+			$socnetauth2_code = unserialize( $this->config->get('socnetauth2_reg_code_'.$this->config->get('socnetauth2_account_format')) );
+			$socnetauth2_code = html_entity_decode($socnetauth2_code[ $this->config->get("config_language_id") ]);
+			
+			$socnetauth2_shop_folder = '';
+			if( $this->config->get('socnetauth2_shop_folder') )
+				$socnetauth2_shop_folder = '/'.$this->config->get('socnetauth2_shop_folder');
+			
+			$redirect_url = $http.$_SERVER['HTTP_HOST'].$socnetauth2_shop_folder.'/socnetauth2/loginza.php';
+			$redirect_url = urlencode($redirect_url);
+			
+			$socnetauth2_code = str_replace("#redirect_url#", $redirect_url, $socnetauth2_code);
+			/* end 2105 */
+			
+			$socnetauth2_label = '';
+			
+			if( 
+				$this->config->get('socnetauth2_label') && !is_array( $this->config->get('socnetauth2_label') ) &&
+				stristr($this->config->get('socnetauth2_label'), '{' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), '}' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), ';' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), ':' ) != false
+			)
+			{
+				$socnetauth2_label = unserialize($this->config->get('socnetauth2_label'));
+			}
+			else
+			{
+				$socnetauth2_label = $this->config->get('socnetauth2_label');
+			}
+	
+	
+			if( !empty($socnetauth2_label[ $this->config->get('config_language_id') ]) )
+			{
+				$socnetauth2_code = str_replace("#socnetauth2_label#", 
+								'<div class="reg_socnetauth2_'.$this->config->get('socnetauth2_reg_format').'_header">'.$socnetauth2_label[ $this->config->get('config_language_id') ]."</div>", 
+								$socnetauth2_code );
+			}
+			else
+			{
+				$socnetauth2_code = str_replace("#socnetauth2_label#", "", $socnetauth2_code );
+			}
+			
+			$SOCNETAUTH2_CODE = $socnetauth2_code;
+			echo $SOCNETAUTH2_CODE;
+		} 
+	}
+/* end socnetauth2 */ ?>
+			]]></add>
+		</operation>
+		
+		<operation  error="skip">
+			<ignoreif><![CDATA[socnetauth2]]></ignoreif>
+			<search position="after"><![CDATA[<div class="simplecheckout-block"]]></search>
+			<add><![CDATA[
+			<?php	/* start socnetauth2 */
+		if( !empty($this->request->get['socnetauth2close']) )
+		{
+			$this->session->data['socnetauth2_confirmdata_show'] = 0;
+		}
+		$SOCNETAUTH2_CODE = '';
+	if( $this->config->get('socnetauth2_status') )
+	{
+	
+		$http = 'http://';
+		if( $this->config->get('socnetauth2_protokol') == 'detect' )
+		{
+			if( 
+				( isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ) || 
+				!empty($_SERVER['HTTPS']) 
+				|| ( !empty($_SERVER['HTTP_CF_VISITOR']) && strstr($_SERVER['HTTP_CF_VISITOR'], "https") )	
+			)
+				$http = 'https://';
+			else
+				$http = 'http://';
+		}
+		else
+			$http = $this->config->get('socnetauth2_protokol'). '://';
+			
+		$this->session->data['socnetauth2_lastlink'] = $http.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+		$this->session->data['socnetauth2_lastlink'] = str_replace("checkout/login", "checkout/checkout", $this->session->data['socnetauth2_lastlink']);
+
+		if( !$this->customer->isLogged() ) 
+		{		
+
+			/* start 2105 */
+			$socnetauth2_code = unserialize( $this->config->get('socnetauth2_reg_code_'.$this->config->get('socnetauth2_account_format')) );
+			$socnetauth2_code = html_entity_decode($socnetauth2_code[ $this->config->get("config_language_id") ]);
+			
+			$socnetauth2_shop_folder = '';
+			if( $this->config->get('socnetauth2_shop_folder') )
+				$socnetauth2_shop_folder = '/'.$this->config->get('socnetauth2_shop_folder');
+			
+			$redirect_url = $http.$_SERVER['HTTP_HOST'].$socnetauth2_shop_folder.'/socnetauth2/loginza.php';
+			$redirect_url = urlencode($redirect_url);
+			
+			$socnetauth2_code = str_replace("#redirect_url#", $redirect_url, $socnetauth2_code);
+			/* end 2105 */
+			
+			$socnetauth2_label = '';
+			
+			if( 
+				$this->config->get('socnetauth2_label') && !is_array( $this->config->get('socnetauth2_label') ) &&
+				stristr($this->config->get('socnetauth2_label'), '{' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), '}' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), ';' ) != false &&
+				stristr($this->config->get('socnetauth2_label'), ':' ) != false
+			)
+			{
+				$socnetauth2_label = unserialize($this->config->get('socnetauth2_label'));
+			}
+			else
+			{
+				$socnetauth2_label = $this->config->get('socnetauth2_label');
+			}
+	
+	
+			if( !empty($socnetauth2_label[ $this->config->get('config_language_id') ]) )
+			{
+				$socnetauth2_code = str_replace("#socnetauth2_label#", 
+								'<div class="reg_socnetauth2_'.$this->config->get('socnetauth2_reg_format').'_header">'.$socnetauth2_label[ $this->config->get('config_language_id') ]."</div>", 
+								$socnetauth2_code );
+			}
+			else
+			{
+				$socnetauth2_code = str_replace("#socnetauth2_label#", "", $socnetauth2_code );
+			}
+			
+			$SOCNETAUTH2_CODE = $socnetauth2_code;
+			echo $SOCNETAUTH2_CODE;
+		} 
+	}
+/* end socnetauth2 */ ?>
+			]]></add>
+		</operation>
+	</file>	
+	
+	<file name="catalog/view/theme/*/template/common/header.tpl" error="skip">
+		<operation  error="skip">
+			<ignoreif><![CDATA[socnetauth2]]></ignoreif>
+			<search position="after"><![CDATA[<body>]]></search>
+			<add><![CDATA[ 
+<?php /* start socnetauth2 */
+	if( $this->config->get('socnetauth2_status') )
+	{
+	
+		if( !empty($this->request->get['socnetauth2close']) )
+		{
+			$this->session->data['socnetauth2_confirmdata_show'] = 0;
+		}
+	
+		if( !$this->customer->isLogged() ) 
+		{			
+			
+			$http = 'http://';
+			if( $this->config->get('socnetauth2_protokol') == 'detect' )
+			{
+				if( 
+					( isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ) || 
+					!empty($_SERVER['HTTPS']) 
+					|| ( !empty($_SERVER['HTTP_CF_VISITOR']) && strstr($_SERVER['HTTP_CF_VISITOR'], "https") )	
+				)
+					$http = 'https://';
+				else
+					$http = 'http://';
+			}
+			else
+				$http = $this->config->get('socnetauth2_protokol'). '://';
+	
+			$this->session->data['socnetauth2_lastlink'] = $http.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+			$this->session->data['socnetauth2_lastlink'] = str_replace("checkout/login", "checkout/checkout", $this->session->data['socnetauth2_lastlink']);
+
+			if( !empty($this->session->data['socnetauth2_confirmdata']) && 
+				!empty($this->session->data['socnetauth2_confirmdata_show']) )
+			{
+				$data = unserialize( $this->session->data['socnetauth2_confirmdata'] );
+				$socnetauth2_confirm_block = $this->config->get('socnetauth2_confirm_block');
+				$socnetauth2_confirm_block = str_replace("#divframe_height#", (300-(32*(5-(count(unserialize($this->session->data['socnetauth2_confirmdata'])))))), $socnetauth2_confirm_block );
+	
+				$socnetauth2_confirm_block = str_replace("#frame_height#", (320-(32*(5-(count(unserialize($this->session->data['socnetauth2_confirmdata'])))))), $socnetauth2_confirm_block);
+	
+				if( strstr($this->session->data['socnetauth2_lastlink'], "?") )
+				$socnetauth2_confirm_block = str_replace("#lastlink#", $this->session->data['socnetauth2_lastlink'].'&socnetauth2close=1', $socnetauth2_confirm_block);
+				else
+				$socnetauth2_confirm_block = str_replace("#lastlink#", $this->session->data['socnetauth2_lastlink'].'?socnetauth2close=1', $socnetauth2_confirm_block);
+	
+				$socnetauth2_confirm_block = str_replace("#frame_url#", $this->url->link( 'account/socnetauth2/frame', '', 'SSL' ), $socnetauth2_confirm_block);
+	
+				echo $socnetauth2_confirm_block;
+			}
+		} 
+	}
+/* end socnetauth2 */ ?>
+			]]></add>
+		</operation>
+	</file>	
+	
+	
+	
+	
+</modification>

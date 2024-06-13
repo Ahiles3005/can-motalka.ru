@@ -1,0 +1,121 @@
+<!DOCTYPE html><html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>"><head><meta charset="UTF-8" />
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NCGKNDX');</script>
+<!-- End Google Tag Manager -->
+<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE"><title><?php echo $title; ?></title><meta property="og:type" content="website"><meta property="og:site_name" content="Can-Motalka"><meta property="og:locale" content="ru_RU"><meta property="og:title" content="<?php echo $title; ?>" /><base href="<?php echo $base; ?>" /><?php if ($robots) { ?><meta name="robots" content="<?php echo $robots; ?>" /><?php } ?><?php if ($description) { ?><meta name="description" content="<?php echo $description; ?>" /><meta property="og:description" content="<?php echo $description; ?>" /><?php } ?><?php if($_SERVER['REQUEST_URI']=='/' || $_SERVER['REQUEST_URI']==false) { ?><meta property="og:url" content="<?php echo $home; ?>"><meta property="og:image" content="<?php echo $home; ?>image/data/og/og_home.jpg" /><?php } else { ?><?php if ($ogimage) { ?><meta property="og:image" content="<?php echo $ogimage; ?>" /><?php } ?><?php } ?><?php if ($ogurl) { ?><meta property="og:url" content="<?php echo $ogurl; ?>" /><?php } ?><?php if ($keywords) { ?><meta name="keywords" content="<?php echo $keywords; ?>" /><?php } ?><?php foreach ($links as $link) { ?><link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" /><?php } ?><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><link rel="apple-touch-icon" sizes="57x57" href="/image/web-favicons/apple-touch-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/image/web-favicons/apple-touch-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/image/web-favicons/apple-touch-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/image/web-favicons/apple-touch-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/image/web-favicons/apple-touch-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/image/web-favicons/apple-touch-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/image/web-favicons/apple-touch-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/image/web-favicons/apple-touch-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/image/web-favicons/apple-touch-icon-180x180.png"><link rel="icon" type="image/png" href="/image/web-favicons/favicon-32x32.png" sizes="32x32"><link rel="icon" type="image/png" href="/image/web-favicons/android-chrome-192x192.png" sizes="192x192"><link rel="icon" type="image/png" href="/image/web-favicons/favicon-96x96.png" sizes="96x96"><link rel="icon" type="image/png" href="/image/web-favicons/favicon-16x16.png" sizes="16x16"><link rel="manifest" href="/image/web-favicons/manifest.json"><link rel="shortcut icon" type="image/x-icon" href="/image/web-favicons/favicon.ico"><meta name="apple-mobile-web-app-title" content="null"><meta name="application-name" content="null"><meta name="msapplication-TileColor" content="#00a300"><meta name="msapplication-TileImage" content="/image/web-favicons/mstile-144x144.png"><meta name="msapplication-config" content="/image/web-favicons/browserconfig.xml"><meta name="theme-color" content="#ffffff"><link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/style.css?v=<?php echo time();?>" /><?php $detect = new Mobile_Detect(); { ?><?php if ($detect->isMobile() || $detect->isTablet()){ ?><link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/style-m.css?v=<?php echo time();?>" /><?php } else { ?><?php } ?><?php foreach ($styles as $style) { ?><link rel="<?php echo $style['rel']; ?>" type="text/css" href="<?php echo $style['href']; ?>" media="<?php echo $style['media']; ?>" /><?php } ?><script src="catalog/view/javascript/common.js?v=<?php echo time();?>"></script><?php foreach ($scripts as $script) { ?><script src="<?php echo $script; ?>"></script><?php } ?>
+<?php
+if ( maxsite_testIE() ) {
+  echo '<link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/ie7-9.css" />';
+}
+?><?php
+$url = $_SERVER['REQUEST_URI'];
+$url = explode('?', $url);
+$url = $url[0];
+if ( $url == '/obshaya-instrukciya/' ) {
+  echo "<meta name='robots' content='noindex, nofollow' />";
+}
+?>
+
+<?php
+if ( maxsite_test1011IE() ) {
+  echo '<link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/ie1011.css" />';
+}
+?>
+<?php if ($stores) { ?>
+<script type="text/javascript"><!--
+$(document).ready(function() {
+<?php foreach ($stores as $store) { ?>
+$('body').prepend('<iframe src="<?php echo $store; ?>" style="display: none;"></iframe>');
+<?php } ?>
+});
+//--></script>
+<?php } ?>
+<?php if ($detect->isMobile() || $detect->isTablet()){ ?><?php } else { ?><style>::-webkit-scrollbar-button{background-image:url();background-repeat:no-repeat;width:6px;height:0}::-webkit-scrollbar-track{background-color:#f1f1f1;box-shadow:0 0 3px #ccc inset}::-webkit-scrollbar-thumb{-webkit-border-radius:5px;border-radius:5px;background-color:green;box-shadow:0 1px 1px #fff inset;background-image:url(../image/59610063.png);background-position:center;background-repeat:no-repeat}::-webkit-resizer{background-image:url();background-repeat:no-repeat;width:7px;height:0}::-webkit-scrollbar{width:11px}</style><?php } ?>
+<?php echo $google_analytics; ?>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCGKNDX"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div id="landing-modal-overlay" data-overlay=""></div>
+<?php if($_SERVER['REQUEST_URI']=='/zakaz/' || $_SERVER['REQUEST_URI']==false) { ?><?php } else { ?><div id="fixpan">
+<div>
+<?php if ($detect->isMobile() && !$detect->isTablet()){ ?>
+<?php } else { ?>
+<p class="slogan">Производство и продажа приборов для самостоятельного увеличения пробега по всей России</p>
+<div class="rightpan"><?php echo $cart; ?></div>
+<?php } ?>
+</div>
+</div>
+<?php } ?>
+<div id="header" <?php if($_SERVER['REQUEST_URI']=='/zakaz/' || $_SERVER['REQUEST_URI']==false) { ?>style="display:none"<?php } else { ?><?php } ?>>
+<div>
+<a class="logo" href="<?php echo $home; ?>" title="<?php echo $name; ?>"><img src="/image/data/logo.png" alt="крутилка спидометра моталка спидометра"></a>
+<?php if ($detect->isMobile() && !$detect->isTablet()){ ?><?php } else { ?><div class="phone"><div class="work-time">Ежедневно<br />с 8.00 до 23.00</div><?php if (($contacts_display == 'header') || ($contacts_display == 'header_footer')) { ?><div><?php echo $contacts_telephone; ?><span>Звонок бесплатный. Круглосуточно</span></div><?php if ($contacts_mobile_telephone) { ?><div><?php echo $contacts_mobile_telephone; ?><span>Viber, Whatsapp</span></div><?php } ?><?php } ?></div><?php } ?>
+</div>
+</div>
+<?php if($_SERVER['REQUEST_URI']=='/zakaz/' || $_SERVER['REQUEST_URI']==false) { ?><?php } else { ?>
+<?php if ($detect->isMobile() || $detect->isTablet()){ ?>
+<?php foreach ($modules as $module) { ?>
+<?php echo $module; ?>
+<?php } ?>
+<?php } else { ?>
+<div id="scrollfix">
+<div>
+<?php if ($categories) { ?>
+<div id="menu">
+<ul>
+<?php foreach ($categories as $category) { ?>
+<li class="dropdown"><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a>
+<?php if ($category['children']) { ?>
+<div class="dropdown-block">
+<?php for ($i = 0; $i < count($category['children']);) { ?>
+<ul>
+<?php $j = $i + ceil(count($category['children']) / $category['column']); ?>
+<?php for (; $i < $j; $i++) { ?>
+<?php if (isset($category['children'][$i])) { ?>
+<li class="dropdown-level">
+<?php $levels_2 = $this->model_catalog_category->getCategories($category['children'][$i]['category_id']); ?>
+<?php if($levels_2) {  ?>
+<a href="<?php echo $category['children'][$i]['href']; ?>"><?php echo $category['children'][$i]['name']; ?><span class="parent"></span></a>
+<div class="dropdown-block-level">
+<ul>
+<?php foreach ($levels_2 as $level_2) { ?>
+<li><a href="<?php echo $this->url->link('product/category', 'path='.$category['category_id'].'_' . $category['children'][$i]['category_id'] . '_' . $level_2['category_id']); ?>"><?php echo $level_2['name']; ?></a></li>
+<?php } ?>
+</ul>
+</div>
+<?php } else { ?>
+<a href="<?php echo $category['children'][$i]['href']; ?>"><?php echo $category['children'][$i]['name']; ?></a>
+<?php } ?>
+</li>
+<?php } ?>
+<?php } ?>
+</ul>
+<?php } ?>
+</div>
+<?php } ?>
+</li>
+<?php } ?>
+<?php echo $menu; ?>
+</ul>
+</div>
+<?php } ?><?php } ?>
+<?php if ($detect->isMobile() || $detect->isTablet()){ ?><?php } else { ?><span class="phone"><?php echo $contacts_telephone; ?><span>Звонок бесплатный. Круглосуточно</span></span><?php } ?>
+</div>
+</div>
+<?php } ?><!--End-detection-->
+<?php } ?><!--End-Mobile_Detect-->
+<?php
+if ( maxsite_testIE() ) {
+  echo '<div class="ie-mess">Похоже, Вы используете устаревшую версию браузера. Пожалуйста, обновите браузер, чтобы воспользоваться всеми функциями сайта!</div>';
+}
+?>
+<div class="clear"></div>
+<div id="notification"></div>
+<div id="wrapper">

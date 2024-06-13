@@ -1,0 +1,295 @@
+body {
+	padding: 0;
+	margin: 0;
+	background: #fff;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 11px;
+}
+img {
+	border: 0;
+}
+#container {
+	padding: 0;
+	height: 340px;
+}
+#dialog {
+	display: none;
+}
+#menu {
+  clear: both;
+  height: 40px;
+  padding: 4px;
+}
+#menu .button-box-general {
+  overflow: hidden;
+  display: inline-block;
+  height: 100%;
+  padding: 0;
+}
+.button-box-general a.button-folder {
+  background: url('../image/filemanager/folder.png') center center no-repeat;
+  cursor: pointer;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  margin: 0 5px 0 0;
+  transition:all 0.2s linear;
+  -moz-transition:all 0.2s linear;
+  -webkit-transition:all 0.2s linear;
+  -o-transition:all 0.2s linear;
+}
+.button-box-general a.button-folder:hover {
+  opacity:0.7;
+  filter: alpha(opacity=70);
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+}
+.button-box-general a.button-delete {
+  background: url('../image/filemanager/edit-delete.png') center center no-repeat;
+  cursor: pointer;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  transition:all 0.2s linear;
+  -moz-transition:all 0.2s linear;
+  -webkit-transition:all 0.2s linear;
+  -o-transition:all 0.2s linear;  
+}
+.button-box-general a.button-delete:hover {
+  opacity:0.7;
+  filter: alpha(opacity=70);
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+}
+#menu .button-box-edit {
+  display: inline-block;
+  overflow: hidden;
+  height: 100%;
+  padding: 0;
+}
+.button-box-edit a.button-move {
+  background: url('../image/filemanager/edit-cut.png') center center no-repeat;
+  cursor: pointer;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  margin: 0 5px 0 0;
+  transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -webkit-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+}
+.button-box-edit a.button-move:hover {
+  opacity:0.7;
+  filter: alpha(opacity=70);
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+}
+.button-box-edit a.button-copy {
+  background: url('../image/filemanager/edit-copy.png') center center no-repeat;
+  cursor: pointer;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  margin: 0 5px 0 0;
+  transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -webkit-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+}
+.button-box-edit a.button-copy:hover {
+  opacity:0.7;
+  filter: alpha(opacity=70);
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+}
+.button-box-edit a.button-rename {
+  background: url('../image/filemanager/edit-rename.png') center center no-repeat;
+  cursor: pointer;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -webkit-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+}
+.button-box-edit a.button-rename:hover {
+  opacity:0.7;
+  filter: alpha(opacity=70);
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+}
+#menu .button-box-upload {
+  display: inline-block;
+  overflow: hidden;
+  height: 100%;
+  padding: 0;
+}
+.button-box-upload a.button-uploads {
+  background: url('../image/filemanager/upload.png') center center no-repeat;
+  cursor: pointer;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  margin: 0 5px 0 0;
+  transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -webkit-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+}
+.button-box-upload a.button-uploads:hover {
+  opacity:0.7;
+  filter: alpha(opacity=70);
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+}
+.button-box-upload a.button-multiupload {
+  background: url('../image/filemanager/multiupload.png') center center no-repeat;
+  cursor: pointer;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  margin: 0 5px 0 0;
+  transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -webkit-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+}
+.button-box-upload a.button-multiupload:hover {
+  opacity:0.7;
+  filter: alpha(opacity=70);
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+}
+#menu .button-box-update {
+  display: inline-block;
+  overflow: hidden;
+  height: 100%;
+  padding: 0;
+}
+.button-box-update a.button-update {
+  background: url('../image/filemanager/refresh.png') center center no-repeat;
+  cursor: pointer;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  margin: 0 5px 0 0;
+  transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -webkit-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+}
+.button-box-update a.button-update:hover {
+  opacity:0.7;
+  filter: alpha(opacity=70);
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+}
+.button-box-update a.button-insert {
+  background: url('../image/filemanager/edit-paste.png') center center no-repeat;
+  cursor: pointer;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  margin: 0 5px 0 0;
+  transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -webkit-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+}
+.button-box-update a.button-insert:hover {
+  opacity:0.7;
+  filter: alpha(opacity=70);
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+}
+.search-box {
+  display: inline-block;
+  vertical-align: top;
+}
+#search { 
+  width: 200px;
+  height: 38px;
+  padding: 0 6px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  -khtml-border-radius: 4px 4px 4px 4px;
+  border-radius: 4px 4px 4px 4px;
+  transition:all 0.2s linear;
+  -moz-transition:all 0.2s linear;
+  -webkit-transition:all 0.2s linear;
+  -o-transition:all 0.2s linear;
+}
+#search:focus { 
+  outline: none;
+  border-color: #00b0f0;
+}
+#column-left {
+  background: #f7f7f7;
+  border-top: 1px solid #ccc;
+  float: left;
+  clear: both;
+  width: 250px;
+  margin: 0;
+  padding: 5px 0 0 0;
+  height: 290px;
+  overflow: auto;
+}
+#column-right {
+  background: #FFF;
+  border-top: 1px solid #ccc;
+  float: right;
+  width: 68%;
+  height: 290px;
+  margin: 0;
+  overflow: auto;
+  text-align: center;
+}
+#column-right div {
+	text-align: left;
+	padding: 5px;
+}
+#column-right a {
+	display: inline-block;
+	text-align: center;
+	border: 1px solid #EEEEEE;
+	cursor: pointer;
+	margin: 5px;
+	padding: 5px;
+}
+#column-right a.selected {
+	border: 1px solid #7DA2CE;
+	background: #EBF4FD;
+}
+#column-right input {
+	display: none;
+}
+.thumb {
+	padding: 5px;
+	width: 100px;
+	height: 100px;
+	background: #F7F7F7;
+	border: 1px solid #CCCCCC;
+	cursor: pointer;
+	cursor: move;
+	position: relative;
+}
+button.btn {display: none;}
+.fileName { display: block;}
+.fileSize { clear: both; display: block; }
+.btnExtra { width: 58px; font-size: 9px; margin: 3px; }
+#visualFeedback { 
+  width: 240px;
+  position: fixed;
+  right: 30px;
+  top: 35px;
+  z-index: 99;
+  background-color: #8AC249 !important;
+  overflow: hidden;
+  display: none;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+}
+#visualFeedback span{
+  font-size: 13px;
+  color: #fbfbfb;
+  font-weight: 400;
+  padding: 13px;
+  display: block;
+}

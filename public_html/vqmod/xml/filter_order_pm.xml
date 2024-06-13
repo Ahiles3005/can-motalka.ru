@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<id>Filter Order Phone and Mail</id>
+	<version>1.03</version>
+	<vqmver>2.1.3</vqmver>
+	<author>AlexDW</author>
+	<file name="CanMoTadLog!n/view/template/sale/order_list.tpl">		
+		<operation error="abort">
+			<search position="before"><![CDATA[
+<td class="left"><?php if ($sort == 'status') { ?>
+			]]></search>
+			<add><![CDATA[
+		<!-- FilterOrderPM -->
+            <td class="left">Phone</td>
+			<td class="left">Mail</td>
+		<!-- FilterOrderPM end -->
+			]]></add>
+		</operation>
+		<operation error="abort">
+		<search position="before"><![CDATA[
+<td><select name="filter_order_status_id">
+			]]></search>
+			<add><![CDATA[
+		<!-- FilterOrderPM -->
+              <td><input type="text" name="filter_phone" id="search-admin" value="<?php echo preg_replace('/[^0-9]/', '', $filter_phone) ; ?>" /></td>
+              <td><input type="text" name="filter_mail" value="<?php echo $filter_mail; ?>" /></td>
+		<!-- FilterOrderPM end -->
+			]]></add>
+		</operation>
+		<operation error="abort">
+		<search position="before"><![CDATA[
+<td class="left"><?php echo $order['status']; ?></td>
+			]]></search>
+			<add><![CDATA[
+		<!-- FilterOrderPM -->
+              <td class="left"><?php echo $order['phone']; ?></td>
+              <td class="left"><?php echo $order['mail']; ?></td>
+		<!-- FilterOrderPM end -->
+			]]></add>
+		</operation>
+		<operation error="skip">
+		<search position="replace"><![CDATA[
+<td class="center" colspan="8"><?php echo $text_no_results; ?></td>
+			]]></search>
+			<add><![CDATA[
+		<!-- FilterOrderPM -->
+<td class="center" colspan="10"><?php echo $text_no_results; ?></td>
+		<!-- FilterOrderPM end -->
+			]]></add>
+		</operation>
+		<operation error="abort">
+		<search position="before"><![CDATA[
+var filter_order_status_id = $('select[name=\'filter_order_status_id\']').attr('value');
+			]]></search>
+			<add><![CDATA[
+// FilterOrderPM
+	var filter_phone = $('input[name=\'filter_phone\']').attr('value');
+	var reg=/[^0-9]/g;
+	var filter_phone = filter_phone.replace(reg, "") ;
+	
+	if (filter_phone) {
+		url += '&filter_phone=' + encodeURIComponent(filter_phone);
+	}
+	
+	var filter_mail = $('input[name=\'filter_mail\']').attr('value');
+	
+	if (filter_mail) {
+		url += '&filter_mail=' + encodeURIComponent(filter_mail);
+	}
+// FilterOrderPM end
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="CanMoTadLog!n/controller/sale/order.php">		
+		<operation error="skip">
+			<search position="after" offset="1" index="false"><![CDATA[
+$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+			]]></search>
+			<add><![CDATA[
+	// FilterOrderPM
+			if (isset($this->request->get['filter_phone'])) {
+				$url .= '&filter_phone=' . urlencode(html_entity_decode($this->request->get['filter_phone'], ENT_QUOTES, 'UTF-8'));
+			}
+
+			if (isset($this->request->get['filter_mail'])) {
+				$url .= '&filter_mail=' . urlencode(html_entity_decode($this->request->get['filter_mail'], ENT_QUOTES, 'UTF-8'));
+			}
+	// FilterOrderPM end
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search position="after" offset="1" index="false"><![CDATA[
+$url .= '&filter_customer=' . $this->request->get['filter_customer'];
+			]]></search>
+			<add><![CDATA[
+	// FilterOrderPM
+			if (isset($this->request->get['filter_phone'])) {
+				$url .= '&filter_phone=' . urlencode(html_entity_decode($this->request->get['filter_phone'], ENT_QUOTES, 'UTF-8'));
+			}
+
+			if (isset($this->request->get['filter_mail'])) {
+				$url .= '&filter_mail=' . urlencode(html_entity_decode($this->request->get['filter_mail'], ENT_QUOTES, 'UTF-8'));
+			}
+	// FilterOrderPM end
+			]]></add>
+		</operation>
+		<operation error="abort">
+			<search position="before" offset="1" index="false"><![CDATA[
+$filter_customer = $this->request->get['filter_customer'];
+			]]></search>
+			<add><![CDATA[
+	// FilterOrderPM
+		if (isset($this->request->get['filter_phone'])) {
+			$filter_phone = $this->request->get['filter_phone'];
+		} else {
+			$filter_phone = null;
+		}
+
+		if (isset($this->request->get['filter_mail'])) {
+			$filter_mail = $this->request->get['filter_mail'];
+		} else {
+			$filter_mail = null;
+		}
+	// FilterOrderPM end
+			]]></add>
+		</operation>
+		<operation error="abort">
+			<search position="before"><![CDATA[
+'filter_order_status_id' => $filter_order_status_id,
+			]]></search>
+			<add><![CDATA[
+	// FilterOrderPM
+			'filter_phone'	     => $filter_phone,
+			'filter_mail'	     => $filter_mail,
+	// FilterOrderPM end
+			]]></add>
+		</operation>
+		<operation error="abort">
+			<search position="before"><![CDATA[
+$this->data['filter_order_status_id'] = $filter_order_status_id;
+			]]></search>
+			<add><![CDATA[
+	// FilterOrderPM
+		$this->data['filter_phone'] = $filter_phone;
+		$this->data['filter_mail'] = $filter_mail;
+	// FilterOrderPM end
+			]]></add>
+		</operation>
+
+		<operation error="abort">
+			<search position="before" offset="1"><![CDATA[
+'order_id'      => $result['order_id'],
+			]]></search>
+			<add><![CDATA[
+	// FilterOrderPM
+		$FilterOrderPM = $this->model_sale_order->getOrderPM($result['order_id']);
+	// FilterOrderPM end
+			]]></add>
+		</operation>
+		<operation error="abort">
+			<search position="before"><![CDATA[
+'status'        => $result['status'],
+			]]></search>
+			<add><![CDATA[
+	// FilterOrderPM
+		'phone'      => $FilterOrderPM['telephone'],
+		'mail'      => $FilterOrderPM['email'],
+	// FilterOrderPM end
+			]]></add>
+		</operation>
+		<operation error="abort">
+			<search position="after"><![CDATA[
+$this->data['text_store_url'] = $this->language->get('text_store_url');
+			]]></search>
+			<add><![CDATA[
+	// FilterOrderPM
+			$this->data['text_email_url'] = $this->language->get('text_email_url');
+	// FilterOrderPM end
+			]]></add>
+		</operation>
+		<operation error="abort">
+			<search position="after"><![CDATA[
+$this->data['store_url'] = $order_info['store_url'];
+			]]></search>
+			<add><![CDATA[
+	// FilterOrderPM
+			$this->data['email_url'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&filter_mail=' . $order_info['email'], 'SSL');
+			$this->data['telephone_url'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&filter_phone=' . preg_replace('/[^0-9]/', '', $order_info['telephone']), 'SSL');
+	// FilterOrderPM end
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="CanMoTadLog!n/view/template/sale/order_info.tpl">
+		<operation error="abort">
+			<search position="replace"><![CDATA[
+<td><?php echo $email; ?></td>
+			]]></search>
+			<add><![CDATA[
+	<!-- FilterOrderPM -->
+            <td><?php echo $email; ?> <a href="<?php echo $email_url; ?>" class="button" target="_blank"><?php echo $text_email_url; ?> <?php echo $email; ?></a></td>
+	<!-- FilterOrderPM end -->
+			]]></add>
+		</operation>
+		<operation error="abort">
+			<search position="replace"><![CDATA[
+<td><?php echo $telephone; ?></td>
+			]]></search>
+			<add><![CDATA[
+	<!-- FilterOrderPM -->
+            <td><?php echo $telephone; ?> <a href="<?php echo $telephone_url; ?>" class="button" target="_blank"><?php echo $text_email_url; ?> <?php echo $telephone; ?></a></td>
+	<!-- FilterOrderPM end -->
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="CanMoTadLog!n/model/sale/order.php">
+		<operation error="abort">
+			<search position="before"><![CDATA[
+public function getOrder($order_id) {
+			]]></search>
+			<add><![CDATA[
+	// FilterOrderPM
+	public function getOrderPM($order_id) {
+		$order_query = $this->db->query("SELECT o.email, o.telephone FROM `" . DB_PREFIX . "order` o WHERE o.order_id = '" . (int)$order_id . "'");
+		if ($order_query->num_rows) {
+			return array(
+				'telephone'               => $order_query->row['telephone'],
+				'email'                   => $order_query->row['email']
+			);
+		} else {
+			return false;
+		}
+	}
+	// FilterOrderPM end
+			]]></add>
+		</operation>
+		<operation error="abort">
+			<search position="after" offset="1"><![CDATA[
+$sql .= " AND o.order_id = '" . (int)$data['filter_order_id'] . "'";
+			]]></search>
+			<add><![CDATA[
+	// FilterOrderPM
+		if (isset($data['filter_phone'])) {
+			$sql .= " AND REPLACE( REPLACE( REPLACE( REPLACE( o.telephone, '-', '' ), '(', '' ), ')', '' ), ' ', '' ) LIKE '%" . $this->db->escape($data['filter_phone']) . "%'";
+		}
+
+		if (isset($data['filter_mail'])) {
+			$sql .= " AND o.email LIKE '%" . $this->db->escape($data['filter_mail']) . "%'";
+		}
+	// FilterOrderPM end
+			]]></add>
+		</operation>
+		<operation error="abort">
+			<search position="after" offset="1"><![CDATA[
+$sql .= " AND order_id = '" . (int)$data['filter_order_id'] . "'";
+			]]></search>
+			<add><![CDATA[
+	// FilterOrderPM
+		if (isset($data['filter_phone'])) {
+			$sql .= " AND REPLACE( REPLACE( REPLACE( REPLACE( telephone, '-', '' ), '(', '' ), ')', '' ), ' ', '' ) LIKE '%" . $this->db->escape($data['filter_phone']) . "%'";
+		}
+
+		if (isset($data['filter_mail'])) {
+			$sql .= " AND email LIKE '%" . $this->db->escape($data['filter_mail']) . "%'";
+		}
+	// FilterOrderPM end
+			]]></add>
+		</operation>
+	</file>
+
+	<file path="CanMoTadLog!n/language/russian/sale/order.php">
+		<operation error="skip">
+			<search position="after"><![CDATA[
+<?php
+			]]></search>
+			<add><![CDATA[
+// FilterOrderPM
+$_['text_email_url']   = 'Найти заказы с ';
+// FilterOrderPM end
+			]]></add>
+		</operation>
+	</file>
+	<file path="CanMoTadLog!n/language/english/sale/order.php">
+		<operation error="skip">
+			<search position="after"><![CDATA[
+<?php
+			]]></search>
+			<add><![CDATA[
+// FilterOrderPM
+$_['text_email_url']   = 'Find orders with ';
+// FilterOrderPM end
+			]]></add>
+		</operation>
+	</file>
+</modification>

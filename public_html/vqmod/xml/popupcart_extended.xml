@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id>PopUpCart Extended OpenCart for 1.5.x.x</id>
+<version>1.5.1</version>
+<vqmver required="true">2.4.0</vqmver>
+<author>sergey@oc-dev.ru</author>
+
+<file path="system/library/cart.php">
+	<operation error="log">
+	<search position="before"><![CDATA[ $this->data[$key] = array( ]]></search>
+	<add><![CDATA[
+		$manufacturer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "manufacturer m LEFT JOIN " . DB_PREFIX . "product p ON (p.manufacturer_id = m.manufacturer_id) WHERE p.product_id = '" . (int)$product_id . "'");
+		
+		if ($manufacturer_query->num_rows) {	
+			$manufacturer = $manufacturer_query->row['name'];
+		} else {
+			$manufacturer = '';
+		}
+	]]></add>
+	</operation>
+	<operation error="log">
+	<search position="after"><![CDATA[ $product_query->row['minimum'], ]]></search>
+	<add><![CDATA[
+		'maximum'         => $product_query->row['quantity'],
+		'manufacturer'         => $manufacturer,
+	]]></add>
+	</operation>
+	<operation error="skip">
+	<search position="replace"><![CDATA[ $key = (int)$product_id . ':' . base64_encode(serialize($option)); ]]></search>
+	<add><![CDATA[
+		$key_old = (int)$product_id . ':' . base64_encode(serialize($option));
+		$key = str_replace('=', '', $key_old);
+	]]></add>
+	</operation>
+	<operation error="skip">
+	<search position="replace"><![CDATA[ $key .= base64_encode(serialize($option)) . ':'; ]]></search>
+	<add><![CDATA[
+		$key_old = base64_encode(serialize($option)) . ':';
+		$key .= str_replace('=', '', $key_old);
+	]]></add>
+	</operation>
+</file>	
+	
+<file name="catalog/controller/common/footer.php">
+	<operation error="skip">
+	<search position="after"><![CDATA[protected function index() {]]></search>
+	<add><![CDATA[
+		$this->data['popupcart_extended'] = $this->getChild('module/popupcart_extended');
+	]]></add>
+	</operation>
+</file>
+
+<file name="catalog/view/theme/*/template/product/product.tpl">
+	<operation error="skip">
+	<search position="replace"><![CDATA[addToCart('<?php echo $product['product_id']; ?>')]]></search>
+	<add><![CDATA[addToCart('<?php echo $product['product_id']; ?>', 1, 1)]]></add>
+	</operation>
+</file>
+
+<file name="catalog/controller/module/cart.php">
+	<operation error="skip">
+	<search position="after"><![CDATA[$product['key'],]]></search>
+	<add><![CDATA[
+		'product_id'      => $product['product_id'],
+	]]></add>
+	</operation>
+</file>
+	
+<file name="catalog/view/theme/*/template/module/cart.tpl">
+	<operation error="skip">
+	<search position="replace"><![CDATA[<?php echo $product['key']; ?>' + ' #cart > *');]]></search>
+	<add><![CDATA[<?php echo $product['key']; ?>' + ' #cart > *'); removeFromCart(<?php echo $product['product_id']; ?>, <?php echo $product['key']; ?>); 
+	]]></add>
+	</operation>
+</file>
+	
+</modification>

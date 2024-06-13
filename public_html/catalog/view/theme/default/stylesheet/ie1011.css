@@ -1,0 +1,50 @@
+.cback-form-open {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -khtml-border-radius: 50%;
+    border-radius: 50%;
+    transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -webkit-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+	animation: ex4 1s ease-in-out infinite;
+	-webkit-animation: ex4 1s ease-in-out infinite;
+	-o-animation: ex4 1s ease-in-out infinite;
+	-moz-animation: ex4 1s ease-in-out infinite;
+}
+@keyframes ex4 {
+	50%  { 
+    transform: rotate(25deg) scale(1.08);
+    -o-transform: rotate(25deg) scale(1.08);
+	box-shadow: 0px 0px 55px 0px rgba(50, 50, 50, 0.8);
+	opacity:.8;
+	filter: alpha(opacity=80);	
+	}	
+}
+@-moz-keyframes ex4 {	
+	50%  {
+    -o-transform: rotate(25deg) scale(1.08);
+    -moz-transform: rotate(25deg) scale(1.08);
+	-moz-box-shadow: 0px 0px 55px 0px rgba(50, 50, 50, 0.8);
+	opacity:.8;
+	filter: alpha(opacity=80);	
+	}
+}
+@-webkit-keyframes ex4 {	
+	50%  {
+    -webkit-transform: rotate(25deg) scale(1.08);
+    -o-transform: rotate(25deg) scale(1.08);
+	-webkit-box-shadow: 0px 0px 55px 0px rgba(50, 50, 50, 0.8);
+	opacity:.8;
+	filter: alpha(opacity=80);	
+	}
+}
+.box-news, .rast, .account-bg, .checkout-register-bg, .otzyvy-bg, .news-bg {
+    background-attachment: inherit;
+}
+.box-news > div .left .image img {
+	width: 200px;
+	height: 200px;
+	padding: 0;
+	margin: 15px;
+}

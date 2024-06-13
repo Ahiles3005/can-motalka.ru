@@ -1,0 +1,156 @@
+.caroufredsel_wrapper {
+    cursor: move!important;
+}
+.multicarousel:after {
+    position: relative;
+    padding: 0 0 20px;
+}
+.multicarousel ul.carousel {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: block;
+}
+.multicarousel ul.carousel li {
+    position: relative;
+    width: 210px;
+    text-align: center;
+    padding: 0;
+    margin: 0 11px;
+    display: block;
+    float: left;
+    background: #fff;
+}
+.multicarousel ul.carousel li .cart {
+    position: absolute;
+    width: 50%;
+    top: auto;
+    left: auto;
+    right: 5px;
+    bottom: 5px;
+    opacity: 0;
+    transition: all .2s ease-in-out;
+    transform: scale(.7);
+}
+.multicarousel ul.carousel li:hover .cart {
+    transform: scale(1);
+    opacity: 1;
+}
+.multicarousel.responsive {
+    width: auto;
+    margin-left: 0;
+}
+.multicarousel .pager {
+    float: left;
+    width: 300px;
+    text-align: center;
+}
+.multicarousel .pager a {
+    margin: 0 5px;
+    text-decoration: none;
+}
+.multicarousel .pager a.selected {
+    text-decoration: underline;
+}
+.multicarousel .timer {
+    background-color: #999;
+    height: 6px;
+    width: 0;
+}
+.multicarousel .next, .multicarousel .prev {
+    display: block!important;
+    position: absolute;
+    height: 100%;
+    width: 50px;
+    margin: 0;
+    top: 0;
+    left: 0;
+    background-color: rgba(51, 51, 51, .2);
+    background-image: url(../image/multiproduct/btn_prev.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 1;
+	border-radius: 8px 0 0 8px;
+}
+.multicarousel .next {
+    background-image: url(../image/multiproduct/btn_next.png);
+    left: auto;
+    right: 0;
+	border-radius: 0 8px 8px 0;
+}
+.multicarousel .next:hover, .multicarousel .prev:hover {
+    transform: scale(1.03);
+    -webkit-transform: scale(1.03);
+    -o-transform: scale(1.03);
+    -moz-transform: scale(1.03);
+    background-color: rgba(51, 51, 51, .4);
+}
+.clearfix {
+    float: none;
+    clear: both;
+}
+.topcarousel {
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    top: -25px;
+    left: 50px;
+    text-align: center;
+    margin: 0;
+    overflow: visible;
+    z-index: 111;
+}
+.carouselrelative {
+    position: relative;
+}
+.carouselrelative a.more {
+    width: 250px;
+    margin: 20px auto 0;
+}
+@media screen and (max-width:767px) {
+    .multicarousel ul.carousel li .cart {
+    bottom: 0;
+    opacity: 1;
+    transform: scale(1);
+}
+.topcarousel {
+    width: 80px;
+    height: 40px;
+    top: -20px;
+    left: 10px;
+}
+.multicarousel .next, .multicarousel .prev {
+    width: 40px;
+    background-size: 10px;
+}
+}@media screen and (max-width:330px) {
+    .multicarousel ul.carousel li {
+    width: 130px;
+}
+}@media screen and (min-width:331px) and (max-width:380px) {
+    .multicarousel ul.carousel li {
+    width: 140px;
+}
+.multicarousel ul.carousel li .price {
+    font-size: 1.2em;
+}
+}@media screen and (min-width:381px) and (max-width:450px) {
+    .multicarousel ul.carousel li {
+    width: 160px;
+}
+.multicarousel ul.carousel li .price {
+    font-size: 1.5em;
+}
+}@media screen and (min-width:451px) and (max-width:600px) {
+    .multicarousel ul.carousel li {
+    width: 200px;
+}
+.multicarousel ul.carousel li .price {
+    font-size: 1.8em;
+}
+}@media screen and (min-width:768px) and (max-width:1100px) {
+    .multicarousel ul.carousel li .cart {
+    bottom: 0;
+    opacity: 1;
+}
+}

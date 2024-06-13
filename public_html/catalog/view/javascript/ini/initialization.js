@@ -1,0 +1,1 @@
+(function($){$(function(){$('input[type=checkbox], input[type=radio], select').styler();$('#rating-updated input').styler('destroy');})})(jQuery);

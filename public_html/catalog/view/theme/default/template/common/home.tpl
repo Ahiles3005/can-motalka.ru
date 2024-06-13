@@ -1,0 +1,1 @@
+<?php echo $header; ?><?php echo $column_left; ?><?php echo $column_right; ?><?php echo $content_top; ?><div id="content"><?php echo $content_bottom; ?></div><?php echo $footer; ?>

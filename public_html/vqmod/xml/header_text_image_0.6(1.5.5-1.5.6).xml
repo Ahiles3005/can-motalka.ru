@@ -1,0 +1,201 @@
+<modification>
+	<id><![CDATA[Phone in the Header and Extra text with images]]></id>
+	<version><![CDATA[0.6]]></version>
+	<vqmver><![CDATA[2.4.1]]></vqmver>
+    <file name="/CanMoTadLog!n/language/russian/setting/setting.php">
+		<operation>
+			<search position="before" error="skip"><![CDATA[?>]]></search>
+			<add><![CDATA[
+$_['entry_extra_text'] = 'Дополнительный текст';
+$_['entry_text_css'] = 'Стиль дополнительного текста';
+$_['entry_img'] = 'Картинка';
+]]>
+			</add>
+		</operation>
+	</file>
+	
+    <file name="/CanMoTadLog!n/language/english/setting/setting.php">
+		<operation>
+			<search position="before" error="skip"><![CDATA[?>]]></search>
+			<add><![CDATA[
+$_['entry_extra_text'] = 'Extra text';
+$_['entry_text_css'] = 'CSS style of extra text';
+$_['entry_img'] = 'Image';
+]]>
+			</add>
+		</operation>
+	</file>	
+	
+    <file name="/CanMoTadLog!n/controller/setting/setting.php">
+		<operation>
+			<search position="before" error="log"><![CDATA[$this->data['entry_name'] = $this->language->get('entry_name');]]></search>
+			<add><![CDATA[
+			$this->data['entry_extra_text'] = $this->language->get('entry_extra_text');
+			$this->data['entry_img'] = $this->language->get('entry_img');
+			$this->data['entry_text_css'] = $this->language->get('entry_text_css');
+		]]></add>
+		</operation>		
+		<operation>
+			<search position="before" error="log"><![CDATA[if (isset($this->request->post['config_logo'])) {]]></search>
+			<add><![CDATA[
+			$this->data['config_phone_img'] = isset($this->request->post['config_phone_img']) ? $this->request->post['config_phone_img'] : $this->config->get('config_phone_img');	
+			$this->data['phone_img'] = ($this->config->get('config_phone_img') && file_exists(DIR_IMAGE . $this->config->get('config_phone_img')) && is_file(DIR_IMAGE . $this->config->get('config_phone_img'))) ? $this->model_tool_image->resize($this->config->get('config_phone_img'), 30, 30) : $this->model_tool_image->resize('no_image.jpg', 30, 30);
+			$this->data['config_css_phone'] = isset($this->request->post['config_css_phone']) ? $this->request->post['config_css_phone'] : $this->config->get('config_css_phone');
+			$this->data['config_extra_img1'] = isset($this->request->post['config_extra_img1']) ? $this->request->post['config_extra_img1'] : $this->config->get('config_extra_img1');	
+			$this->data['extra_img1'] = ($this->config->get('config_extra_img1') && file_exists(DIR_IMAGE . $this->config->get('config_extra_img1')) && is_file(DIR_IMAGE . $this->config->get('config_extra_img1'))) ? $this->model_tool_image->resize($this->config->get('config_extra_img1'), 30, 30) : $this->model_tool_image->resize('no_image.jpg', 30, 30);
+			$this->data['config_extra_text0'] = isset($this->request->post['config_extra_text0']) ? $this->request->post['config_extra_text0'] : $this->config->get('config_extra_text0');
+			$this->data['config_extra_text1'] = isset($this->request->post['config_extra_text1']) ? $this->request->post['config_extra_text1'] : $this->config->get('config_extra_text1');
+			$this->data['config_extra_text1_css'] = isset($this->request->post['config_extra_text1_css']) ? $this->request->post['config_extra_text1_css'] : $this->config->get('config_extra_text1_css');
+			$this->data['config_extra_img2'] = isset($this->request->post['config_extra_img2']) ? $this->request->post['config_extra_img2'] : $this->config->get('config_extra_img2');	
+			$this->data['extra_img2'] = ($this->config->get('config_extra_img2') && file_exists(DIR_IMAGE . $this->config->get('config_extra_img2')) && is_file(DIR_IMAGE . $this->config->get('config_extra_img2'))) ? $this->model_tool_image->resize($this->config->get('config_extra_img2'), 30, 30) : $this->model_tool_image->resize('no_image.jpg', 30, 30);
+			$this->data['config_extra_text2'] = isset($this->request->post['config_extra_text2']) ? $this->request->post['config_extra_text2'] : $this->config->get('config_extra_text2');
+			$this->data['config_extra_text2_css'] = isset($this->request->post['config_extra_text2_css']) ? $this->request->post['config_extra_text2_css'] : $this->config->get('config_extra_text2_css');
+			$this->data['config_extra_img3'] = isset($this->request->post['config_extra_img3']) ? $this->request->post['config_extra_img3'] : $this->config->get('config_extra_img3');	
+			$this->data['extra_img3'] = ($this->config->get('config_extra_img3') && file_exists(DIR_IMAGE . $this->config->get('config_extra_img3')) && is_file(DIR_IMAGE . $this->config->get('config_extra_img3'))) ? $this->model_tool_image->resize($this->config->get('config_extra_img3'), 30, 30) : $this->model_tool_image->resize('no_image.jpg', 30, 30);
+			$this->data['config_extra_text3'] = isset($this->request->post['config_extra_text3']) ? $this->request->post['config_extra_text3'] : $this->config->get('config_extra_text3');
+			$this->data['config_extra_text3_css'] = isset($this->request->post['config_extra_text3_css']) ? $this->request->post['config_extra_text3_css'] : $this->config->get('config_extra_text3_css');	
+		]]></add>
+		</operation>
+	</file>
+
+	<file name="/CanMoTadLog!n/view/template/common/header.tpl">
+		<operation>
+			<search position="after" error="log"><![CDATA[<script type="text/javascript" src="view/javascript/jquery-tooltip/jquery.tooltip.min.js"></script>]]></search>
+			<add><![CDATA[<script type="text/javascript" src="view/javascript/jscolor/spectrum.js"></script>]]></add>
+		</operation>
+		<operation>
+			<search position="after" error="log"><![CDATA[<link rel="stylesheet" type="text/css" href="view/stylesheet/quick-edit.css?v=<?php echo time();?>" />]]></search>
+			<add><![CDATA[<link rel="stylesheet" type="text/css" href="view/javascript/jscolor/spectrum.css" />]]></add>
+		</operation>
+	</file>
+
+	<file name="/CanMoTadLog!n/view/template/setting/setting.tpl">
+		<operation>
+			<search position="after" error="log"><![CDATA[<div id="tab-general" class="settabs-content">]]></search>
+			<add><![CDATA[
+			<table class="form" style="background:#efefef">
+			<tbody>
+			<tr>
+              <td>Текст растяжки (<b>оставить поле пустым для отключения растяжки</b>):</td>
+              <td><input type="text" name="config_css_phone" size="100" value="<?php echo $config_css_phone; ?>"/></td>
+            </tr>
+			<tr>
+              <td><b>Цвет текста растяжки</b> (по умолчанию белый):</td>
+              <td><input type="text" id="colorpicker" name="config_extra_text0" size="30" value="<?php echo $config_extra_text0; ?>"/></td>
+            </tr>
+            <tr>
+              <td><b>Фоновое изображение</b> (не обязательно, рекомендуемое разрешение - 1300х50px):</td>
+              <td><div class="image"><img src="<?php echo $phone_img; ?>" alt="" id="thumb-phone_image" />
+                  <input type="hidden" name="config_phone_img" value="<?php echo $config_phone_img; ?>" id="phone_image" />
+                  <br />
+                  <a onclick="image_upload('phone_image', 'thumb-phone_image');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-phone_image').attr('src', '<?php echo $no_image; ?>'); $('#phone_image').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
+            </tr>
+            <tr>
+              <td><b>Фоновая текстура</b> (необязательно, рекомендуемый размер 50х50px, цвет фона и наличие текстуры можно совмещать):</td>
+              <td><div class="image"><img src="<?php echo $extra_img1; ?>" alt="" id="thumb-extra_img1" />
+                  <input type="hidden" name="config_extra_img1" value="<?php echo $config_extra_img1; ?>" id="extra_img1" />
+                  <br />
+                  <a onclick="image_upload('extra_img1', 'thumb-extra_img1');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-extra_img1').attr('src', '<?php echo $no_image; ?>'); $('#extra_img1').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
+            </tr>
+			<tr>
+              <td><b>Цвет фона растяжки</b> (по умолчанию градиент).</td>
+              <td><input type="text" id="colorpicker1" name="config_extra_text1" size="30" value="<?php echo $config_extra_text1; ?>"/></td>
+            </tr>	
+			<tr>
+              <td><b>Наименование кнопки для ссылки</b> (ели нужна). Оставить пустым для отключения кнопки: </td>
+              <td><input type="text" name="config_extra_text1_css" size="30" value="<?php echo $config_extra_text1_css; ?>"/></td>
+            </tr>
+			<tr>
+              <td><b>Ссылка для кнопки</b> (например на статью, можно просто скопировать из адресной строки): </td>
+              <td><input type="text" name="config_extra_text2" size="50" value="<?php echo $config_extra_text2; ?>"/></td>
+            </tr>
+			<tr>
+              <td><b>Цвет текста ссылки для кнопки</b> (по умолчанию белый):</td>
+              <td><input type="text" id="colorpicker2" name="config_extra_text3_css" size="30" value="<?php echo $config_extra_text3_css; ?>"/></td>
+            </tr>
+            <tr>
+			<tr>
+              <td><b>Цвет кнопки</b>. По умолчанию черный: </td>
+              <td><input type="text" id="colorpicker3" name="config_extra_text2_css" size="30" value="<?php echo $config_extra_text2_css; ?>"/></td>
+            </tr>				
+			<tr>
+              <td><b>Произвольное поле</b> (напрмер, для мелкого текста под основным, или текста со <b style="color:red">*</b>):</td>
+              <td><input type="text" name="config_extra_text3" size="100" value="<?php echo $config_extra_text3; ?>"/></td>
+            </tr>	
+			</tbody>
+			</table>
+<script>
+	$("#colorpicker, #colorpicker1, #colorpicker2, #colorpicker3").spectrum({
+	    preferredFormat: "hex",
+		allowEmpty:true,
+		showInput: true,
+		showInitial: true,
+		showAlpha: true
+	});
+</script>
+            ]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/controller/common/header.php">
+		<operation>
+			<search position="after" error="log"><![CDATA[$this->data['lang'] = $this->language->get('code');]]></search>
+				<add><![CDATA[
+				$this->data['telephone'] = $this->config->get('config_telephone'); 
+				$this->data['css_phone'] = $this->config->get('config_css_phone');
+				$this->data['extra_text0'] = $this->config->get('config_extra_text0');
+				$this->data['extra_text1'] = $this->config->get('config_extra_text1');
+				$this->data['extra_text1_css'] = $this->config->get('config_extra_text1_css');
+				$this->data['extra_text2'] = $this->config->get('config_extra_text2');
+				$this->data['extra_text2_css'] = $this->config->get('config_extra_text2_css');				
+				$this->data['extra_text3'] = $this->config->get('config_extra_text3');
+				$this->data['extra_text3_css'] = $this->config->get('config_extra_text3_css');				
+				]]>
+				</add>
+		</operation>
+				
+		<operation>
+			<search position="after" error="log"><![CDATA[$this->data['name'] = $this->config->get('config_name');]]></search>
+				<add><![CDATA[
+				$this->data['phone_img'] = ($this->config->get('config_phone_img') && file_exists(DIR_IMAGE . $this->config->get('config_phone_img'))) ? $server . 'image/' . $this->config->get('config_phone_img') : '';
+				$this->data['extra_img1'] = ($this->config->get('config_extra_img1') && file_exists(DIR_IMAGE . $this->config->get('config_extra_img1'))) ? $server . 'image/' . $this->config->get('config_extra_img1') : '';
+				$this->data['extra_img2'] = ($this->config->get('config_extra_img2') && file_exists(DIR_IMAGE . $this->config->get('config_extra_img2'))) ? $server . 'image/' . $this->config->get('config_extra_img2') : '';
+				$this->data['extra_img3'] = ($this->config->get('config_extra_img3') && file_exists(DIR_IMAGE . $this->config->get('config_extra_img3'))) ? $server . 'image/' . $this->config->get('config_extra_img3') : '';
+				]]>
+				</add>
+		</operation>	
+	</file>
+	
+	<file name="catalog/view/theme/*/template/common/header.tpl">
+		<operation>
+			<search position="before" error="log"><![CDATA[<body>]]></search>
+				<add><![CDATA[
+<?php if($_SERVER['REQUEST_URI']=='/zakaz/' || $_SERVER['REQUEST_URI']==false) { ?><?php } else { ?>
+				<?php if(!empty($css_phone)){ ?>
+				<div class="header-banner" style="<?php if ($phone_img) { ?>background-image:url(<?php echo $phone_img; ?>);background-size:cover;background-repeat:no-repeat;<?php } ?> <?php if ($extra_img1) { ?>background-image:url(<?php echo $extra_img1; ?>) !important;background-size:50px !important;background-repeat:repeat !important;<?php } ?> <?php if ($extra_text1) { ?>background-color:<?php echo $extra_text1; ?>;<?php } ?><?php if(!empty($phone_img || $extra_img1 || $extra_text1)){ ?><?php } else { ?>background: -webkit-linear-gradient(90deg,hsla(112.28,55.8%,35.49%,1) 0%,hsla(112.28,55.8%,35.49%,0) 100%),-webkit-linear-gradient(35deg,hsla(112.28,65.44%,44.54%,1) 100%,hsla(112.28,65.44%,44.54%,0) 78%);background: linear-gradient(360deg,hsla(112.28,55.8%,35.49%,1) 0%,hsla(112.28,55.8%,35.49%,0) 100%),linear-gradient(55deg,hsla(112.28,65.44%,44.54%,1) 100%,hsla(112.28,65.44%,44.54%,0) 78%)<?php } ?>">
+				<div class="banner-content">
+					<div <?php if ($extra_text1_css) { ?><?php } else { ?>style="flex-basis:100%;"<?php } ?>><p <?php if ($extra_text0) { ?>style="color:<?php echo $extra_text0; ?>"<?php } ?>><?php echo $css_phone; ?></p><?php if ($extra_text3) { ?><p <?php if ($extra_text0) { ?>style="color:<?php echo $extra_text0; ?>"<?php } ?>><?php echo $extra_text3; ?></p><?php } ?></div>
+					<?php if ($extra_text1_css) { ?><div><a href="<?php echo $extra_text2; ?>" style="<?php if ($extra_text2_css) { ?>background:<?php echo $extra_text2_css; ?>;<?php } else { ?>background:#0F0F0F;<?php } ?> <?php if ($extra_text3_css) { ?>color:<?php echo $extra_text3_css; ?>;<?php } ?>"><?php echo $extra_text1_css; ?></a></div><?php } ?>
+				</div>
+				</div>
+<style>
+#scrollfix{top:175px}#fixpan,#header{top:50px}.rast-heading{margin:226px 0 0}.header-banner{width:100%;height:50px;position:absolute;top:0;left:0;z-index:2222;margin:0}.header-banner div.banner-content{width:1200px;margin:0 auto;height:100%;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-wrap:wrap}.header-banner div.banner-content div{flex-basis:70%;height:100%;text-align:left}.header-banner div.banner-content div+div{flex-basis:30%;text-align:left}.header-banner div.banner-content div>p{margin:0;padding:8px 0 0 0;font-size:18px;line-height:20px;font-weight:700;color:#fff;text-shadow:0 0 5px rgba(0,0,0,.3)}.header-banner div.banner-content div>p+p{padding:0;line-height:13px;font-size:13px;font-weight:500}.header-banner div.banner-content div>a{line-height:50px;margin:0;padding:8px 25px;border-radius:8px;color:#fff;font-size:16px;font-weight:500}.header-banner div.banner-content div>a:hover{box-shadow:inset 0 -35px 0 0 rgba(0,0,0,.3)}@media screen and (max-width:1400px){.header-banner div.banner-content{width:1200px}}@media screen and (min-width:1401px){.header-banner div.banner-content{width:1300px}}@media screen and (min-width:1421px){.header-banner div.banner-content{width:1400px}}@media screen and (max-width:767px){.header-banner div.banner-content{width:100%}.header-banner div.banner-content div>p{font-size:1.4em;line-height:1.2}.header-banner div.banner-content div>p+p{line-height:1;font-size:1em}.header-banner div.banner-content div>a{padding:8px 20px;color:#fff;font-size:1.2em}.rast-heading{margin:50px 0 2em}#fixpan,#header{top:0}.header-banner{top:45px;height:auto;padding:0 10px 10px 10px;z-index:1000}.home-page h1{margin:5.8em auto 1em}}
+</style>
+<script>
+$(document).ready(function(){
+$(window).scroll(function(e){$el=$('#scrollfix');if($(this).scrollTop()>175){$el.css({'position':'fixed','top':'0','border-bottom':'1px solid #aaa'});$('#scrollfix > div .phone').css({'opacity':'1'});}if($(this).scrollTop()<175){$el.css({'position':'absolute','top':'175px','border-bottom':'1px solid transparent'});$('#scrollfix > div .phone').css({'opacity':'0'})}});
+});
+</script>
+<?php } else { ?>
+<script>
+$(document).ready(function(){
+$(window).scroll(function(e){$el=$('#scrollfix');if($(this).scrollTop()>125){$el.css({'position':'fixed','top':'0','border-bottom':'1px solid #aaa'});$('#scrollfix > div .phone').css({'opacity':'1'});}if($(this).scrollTop()<125){$el.css({'position':'absolute','top':'125px','border-bottom':'1px solid transparent'});$('#scrollfix > div .phone').css({'opacity':'0'})}});
+});
+</script>
+<?php } ?>	
+<?php } ?>				
+				]]>
+				</add>
+		</operation>
+	</file>
+</modification>

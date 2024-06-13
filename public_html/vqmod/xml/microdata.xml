@@ -1,0 +1,37 @@
+<modification>
+
+	<id><![CDATA[MICRODATA]]></id>
+	<version><![CDATA[2.1]]></version>
+	<author><![CDATA[DariyGRAY | email:dariy.gray@gmail.com | skype:DariyGRAY]]></author>
+	
+	<file path='catalog/controller/product/' name='product.php'>
+		<operation error='skip'>
+			<search position='before' index='1'><![CDATA[
+				if (file_exists
+			]]></search>
+			<add><![CDATA[
+				/*** MICRODATA = Microdata ***/
+				$this->data['name'] = $product_info['name'];
+				$this->data['url'] = $this->url->link('product/product', 'product_id=' . $this->request->get['product_id']);
+				$this->data['priceCurrency'] = $this->currency->getCode();
+				$this->data['availability'] = $product_info['quantity'] ? true : false;
+				$this->data['reviewCount'] = (int)$product_info['reviews'];
+				$this->data['ratingValue'] = $product_info['rating'];
+				$this->data['image'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+			]]></add>
+		</operation>
+	</file>
+	<!-- Microdata END -->
+
+	<file path='catalog/view/theme/*/template/common/' name='header.tpl'>
+		<operation error='skip'>
+			<search position='replace'><![CDATA[
+				<html
+			]]></search>
+			<add><![CDATA[
+				<html prefix='og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# product: http://ogp.me/ns/product#'
+			]]></add>
+		</operation>
+	</file>
+
+</modification>

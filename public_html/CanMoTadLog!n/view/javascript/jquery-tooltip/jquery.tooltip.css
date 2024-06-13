@@ -1,0 +1,24 @@
+#tooltip {
+	position: absolute;
+	z-index: 10000;
+	background: #2B2E3F;
+	border: 1px solid #fff;
+	color: #fff;
+	padding: 0 15px;
+	max-width: 250px;
+	font-size: 11px;
+	font-weight: 300;
+	color: #fff;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	border-radius: 3px;
+}
+#tooltip span{
+	font-weight: 300;
+	color: #fff;
+}
+#tooltip h3{
+	font-weight: 300;
+	color: #fff;
+}

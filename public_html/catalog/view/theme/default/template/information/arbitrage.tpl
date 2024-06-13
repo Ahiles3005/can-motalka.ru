@@ -1,0 +1,1 @@
+<?php include 'catalog/view/theme/default/template/error/not_found.tpl'; ?>

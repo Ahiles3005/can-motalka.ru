@@ -1,0 +1,372 @@
+.cback-form-open {
+    position: fixed;
+    top: auto;
+    bottom: 7%;
+    right: 5%;
+    z-index: 999;
+}
+.img-circle {
+    background-color: #6ad863;
+    box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+}
+
+.circlephone {
+    box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    border:  2px solid #6ad863;
+    width: 150px;
+    height: 150px;
+    bottom: -25px;
+    right: 10px;
+    position: absolute;
+    -webkit-border-radius: 100%;
+    -moz-border-radius:  100%;
+    border-radius:  100%;
+    opacity:  .6;
+    -webkit-animation:  circle-anim 2.4s infinite ease-in-out !important;
+    -moz-animation:  circle-anim 2.4s infinite ease-in-out !important;
+    -ms-animation:  circle-anim 2.4s infinite ease-in-out !important;
+    -o-animation:  circle-anim 2.4s infinite ease-in-out !important;
+    animation:  circle-anim 2.4s infinite ease-in-out !important;
+    -webkit-transition:  all .5s;
+    -moz-transition:  all .5s;
+    -o-transition:  all .5s;
+    transition:  all 0.5s;
+}
+
+.circle-fill {
+    box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    background-color: #6ad863;
+    width: 100px;
+    height: 100px;
+    bottom: 0px;
+    right: 35px;
+    position: absolute;
+    -webkit-border-radius:  100%;
+    -moz-border-radius:  100%;
+    border-radius:  100%;
+    border:  2px solid transparent;
+    -webkit-animation:  circle-fill-anim 2.3s infinite ease-in-out;
+    -moz-animation:  circle-fill-anim 2.3s infinite ease-in-out;
+    -ms-animation:  circle-fill-anim 2.3s infinite ease-in-out;
+    -o-animation:  circle-fill-anim 2.3s infinite ease-in-out;
+    animation:  circle-fill-anim 2.3s infinite ease-in-out;
+    -webkit-transition:  all .5s;
+    -moz-transition:  all .5s;
+    -o-transition:  all .5s;
+    transition:  all 0.5s;
+}
+
+.img-circle {
+    box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    width: 72px;
+    height: 72px;
+    bottom:  14px;
+    right:  49px;
+    position: absolute;
+    -webkit-border-radius:  100%;
+    -moz-border-radius:  100%;
+    border-radius:  100%;
+    border:  2px solid transparent;
+    opacity:  .8;
+	transition:opacity 0.2s linear;
+}
+.img-circleblock {
+	position: relative;
+    box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    width: 72px;
+    height: 72px;
+    background-position:  center center;
+    background-repeat: no-repeat;
+    animation-name:  tossing;
+    -webkit-animation-name:  tossing;
+    animation-duration:  1.5s;
+    -webkit-animation-duration:  1.5s;
+    animation-iteration-count:  infinite;
+    -webkit-animation-iteration-count:  infinite;
+}
+.img-circleblock:before {
+    position: absolute;
+    content: "\f2be";
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    text-align: center;
+    line-height: 72px;
+    font-size: 32px;
+    color: #fff;
+}
+.cback_off:before {
+	content: "\f260";
+}
+.img-circle:hover {
+    opacity:  1;
+}
+@keyframes pulse {0% {transform: scale(0.9);opacity: 1;}
+  50% {transform: scale(1); opacity: 1; }   
+  100% {transform: scale(0.9);opacity: 1;}}
+ @-webkit-keyframes pulse {0% {-webkit-transform: scale(0.95);opacity: 1;}
+  50% {-webkit-transform: scale(1);opacity: 1;}   
+  100% {-webkit-transform: scale(0.95);opacity: 1;}}
+@keyframes tossing {
+  0% {transform: rotate(-8deg);}
+  50% {transform: rotate(8deg);}
+  100% {transform: rotate(-8deg);}}
+@-webkit-keyframes tossing {
+  0% {-webkit-transform: rotate(-8deg);}
+  50% {-webkit-transform: rotate(8deg);}
+  100% {-webkit-transform: rotate(-8deg);}}
+@-moz-keyframes circle-anim {
+  0% {-moz-transform: rotate(0deg) scale(0.5) skew(1deg);opacity: .1;-moz-opacity: .1;-webkit-opacity: .1;-o-opacity: .1;}
+  30% {-moz-transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .5;-moz-opacity: .5;-webkit-opacity: .5;-o-opacity: .5;}
+  100% {-moz-transform: rotate(0deg) scale(1) skew(1deg);opacity: .6;-moz-opacity: .6;-webkit-opacity: .6;-o-opacity: .1;}}
+@-webkit-keyframes circle-anim {
+  0% {-webkit-transform: rotate(0deg) scale(0.5) skew(1deg);-webkit-opacity: .1;}
+  30% {-webkit-transform: rotate(0deg) scale(0.7) skew(1deg);-webkit-opacity: .5;}
+  100% {-webkit-transform: rotate(0deg) scale(1) skew(1deg);-webkit-opacity: .1;}}
+@-o-keyframes circle-anim {
+  0% {-o-transform: rotate(0deg) kscale(0.5) skew(1deg);-o-opacity: .1;}
+  30% {-o-transform: rotate(0deg) scale(0.7) skew(1deg);-o-opacity: .5;}
+  100% {-o-transform: rotate(0deg) scale(1) skew(1deg);-o-opacity: .1;}}
+@keyframes circle-anim {
+  0% {transform: rotate(0deg) scale(0.5) skew(1deg);opacity: .1;}
+  30% {transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .5;}
+  100% {transform: rotate(0deg) scale(1) skew(1deg);
+opacity: .1;}}
+@-moz-keyframes circle-fill-anim {
+  0% {-moz-transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .2;}
+  50% {-moz-transform: rotate(0deg) -moz-scale(1) skew(1deg);opacity: .2;}
+  100% {-moz-transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .2;}}
+@-webkit-keyframes circle-fill-anim {
+  0% {-webkit-transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .2;  }
+  50% {-webkit-transform: rotate(0deg) scale(1) skew(1deg);opacity: .2;  }
+  100% {-webkit-transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .2;}}
+@-o-keyframes circle-fill-anim {
+  0% {-o-transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .2;}
+  50% {-o-transform: rotate(0deg) scale(1) skew(1deg);opacity: .2;}
+  100% {-o-transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .2;}}
+@keyframes circle-fill-anim {
+  0% {transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .2;}
+  50% {transform: rotate(0deg) scale(1) skew(1deg);opacity: .2;}
+  100% {transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .2;}}
+.cback-form-box {
+    position: fixed;
+    display: block;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    padding: 0!important;
+    width: 600px;
+    max-height: 350px;
+	height: auto;
+    background: #fff;
+    opacity: 0;
+    transform: scale(0);
+    z-index: 99999999;
+    border-radius: 8px;
+    transition: all .4s cubic-bezier(.54,-.97,.4,2.08);
+    overflow: hidden;
+}
+.cback-form-box .title {
+    height: 45px;
+    line-height: 45px;
+    padding: 0;
+    background-color: #929292;
+    background-image: linear-gradient(180deg, #929292 0%, #717171 100%);
+    color: #fff;
+    border: none;
+    font-size: 18px;
+    text-align: center;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    margin: 0;
+}
+.cback-form-box .cback-form-cls {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: auto;
+    background: transparent;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+}
+.cback-form-box .cback-form-cls:before, .cback-form-box .cback-form-cls:after {
+    position: absolute;
+    content: "";
+    width: 20px;
+    height: 2px;
+    background: #fff;
+    top: 20px;
+    left: 15px;
+    transform: rotate(45deg);
+    border-radius: 4px;
+    transition: all .2s linear;
+}
+.cback-form-box .cback-form-cls:after {
+    transform: rotate(-45deg);
+}
+.cback-form-box .cback-form-cls:hover:before {
+    transform: rotate(-45deg);
+}
+.cback-form-box .cback-form-cls:hover:after {
+    transform: rotate(45deg);
+}
+#cback-form {
+    position: relative;
+    padding: 0;
+    margin: 0 auto;
+    width: 80%;
+    height: 100%;
+	text-align: center;
+}
+#cback-form p.cdesc {
+    display: block;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    color: #000;
+    padding: 10px 0 20px;
+    margin: 0;
+    text-align: left;
+}
+#cback-form form {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0 0 90px;
+    overflow: auto;
+}
+#cback-form input[type='text'], #cback-form textarea {
+    width: 80%;
+    display: block;
+    color: #000;
+    font-size: 16px;
+    font-weight: 300;
+    background: #eee;
+    padding: 11px 25px;
+    margin: 0 auto 20px;
+    border: none;
+    border-radius: 20px;
+}
+#cback-form textarea {
+    width: 94%;
+    min-height: 80px;
+    max-height: 120px;
+    resize: vertical;
+}
+#cback-form input[type='text']:focus, #cback-form textarea:focus {
+    background-color: #ddd;
+}
+.large-box {
+    width: 500px;
+    max-height: 400px;
+}
+.large-box .name-field, .large-box .phone-field {
+    display: inline-block!important;
+    vertical-align: top;
+    width: 45%!important;
+    margin: 0 5px 20px!important;
+}
+.large-box #cback-form .btn {
+    width: 60%!important;
+}
+#cback-form .btn {
+    width: 50%;
+    display: block;
+    height: 40px;
+    background: #358D28;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 40px;
+    margin: 30px auto 0;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: all .2s linear;
+}
+#cback-form .btn:hover {
+    text-decoration: none;
+    box-shadow: inset 0 -40px 0 0 rgba(0,0,0,.1);
+}
+#cback-form .btn:focus {
+    outline: none;
+}
+.opened {
+    height: 100%}
+#cback-form-overlay {
+    display: none;
+    background-color: #11141A;
+    opacity: .8;
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+.jGrowl {
+    position: absolute;
+    top: 80px;
+    left: -250px;
+    z-index: 999999999;
+    background: rgba(255, 255, 255, .85);
+    color: #000;
+    width: 250px;
+    font-size: 14px;
+    padding: 0;
+}
+.jGrowl-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 18px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.jGrowl .infos {
+    position: relative;
+    padding: 25px;
+    border-bottom: 1px solid #9CCD0A;
+    background: #9CCD0A;
+    color: #fff;
+    font-weight: 500;
+}
+.jGrowl .error {
+    position: relative;
+    color: #000;
+    padding: 25px;
+    border-bottom: 1px solid red;
+}
+@media screen and (max-width: 510px) {
+.cback-form-open {
+    right: 2%;
+}
+.cback-form-box {
+    width: 90%;
+}
+}
+@media screen and (max-width: 350px) {
+#cback-form input[type='text'], #cback-form textarea {
+    width: 100% !important;
+    margin: 0 auto 10px !important;
+}
+#cback-form p.cdesc {
+    font-size: 1em;
+    line-height: 1.2;
+}
+.large-box #cback-form .btn {
+    margin: 10px auto 0;
+}
+}

@@ -1,0 +1,1 @@
+<div class="home-page"><?php echo $message; ?></div>

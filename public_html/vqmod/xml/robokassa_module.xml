@@ -1,0 +1,41 @@
+<modification>
+	<id>RoboKassa module</id>
+	<version>1.4.x and 1.5.x</version>
+	<vqmver>1.0.8</vqmver>
+	<author>kin</author>
+	<file name="CanMoTadLog!n/controller/extension/payment.php">
+		<operation>
+			<search position="after"><![CDATA[$extension = basename($file, '.php');]]></search>
+			<add><![CDATA[if( preg_match("/^robokassa[\d]+$/", $extension) ) continue;]]></add>
+		</operation>
+	</file>
+	<file name="catalog/controller/checkout/payment_method.php">
+		<operation>
+			<search position="replace"><![CDATA[if (isset($this->session->data['comment'])) {]]></search>
+			<add><![CDATA[if( !empty($method_data) ) { $show_methods = array(); foreach($method_data as $method) { if( !empty($method['image']) )	{ $method['title'] = $method['image']; } $show_methods[] = $method; } $this->data['payment_methods'] = $show_methods; } if (isset($this->session->data['comment'])) {]]></add>
+		</operation>
+	</file>
+	<file name="catalog/view/theme/*/template/quickcheckout/payment_method.tpl">
+		<operation>
+			<search position="before"><![CDATA[<?php echo $payment_method['title']; ?><span class="price"><?php if (isset($payment_method['cost'])) { echo $payment_method['cost']; } ?></span></label>]]></search>
+			<add><![CDATA[
+			
+			  <?php if( isset($payment_method['img_url']) ) { ?>
+			   <img class="payment-image <?php if (!$data['display_images']) {  echo 'qc-hide';  } ?>" src="<?php echo $payment_method['img_url']; ?>" />
+			  <?php } ?>
+		  
+			]]></add>
+		</operation>
+	</file>
+    <file name="catalog/view/theme/*/template/checkout/simplecheckout_payment.tpl">
+        <operation error="skip">
+            <search position="replace">
+            <![CDATA[<?php echo $payment_method['title']; ?>]]>
+            </search>
+			<add><![CDATA[<?php if( !empty($payment_method['html_image']) ) { 
+			  ?><?php echo $payment_method['html_image']; ?><?php } else { 
+			  ?><?php echo $payment_method['title']; ?><?php } ?>]]></add>
+        </operation>
+    </file>
+	
+</modification>

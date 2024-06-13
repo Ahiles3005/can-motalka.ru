@@ -1,0 +1,296 @@
+<modification>
+<id>Megamenu</id>
+<version>1.0</version>
+<vqmver>2.0.0</vqmver>
+<author>octemplates</author>
+<file name="catalog/view/theme/*/template/common/header.tpl">
+<operation>
+<search position="replace"><![CDATA[
+<?php if ($categories) { ?>
+]]></search>
+<add><![CDATA[
+<? if($use_megamenu) {?>
+<nav id="menu" class="megamenu-menu navbar">
+<ul class="nav navbar-nav">
+<?php foreach ($items as $item) { ?>
+<?php if ($item['children']) { ?>
+<li class="dropdown">
+<a href="<?php echo $item['href']; ?>" <?php if($item['use_target_blank'] == 1) { echo 'target="_blank" ';}?>class="a<?php echo md5($item['name']); ?> <?php if($item['use_target_blank'] == 0) { echo 'dropdown-toggle dropdown-img" ';}?>  <?if($item['thumb']){?> style="background-image: url('<?=$item['thumb']?>');background-size: 25px;background-repeat: no-repeat;background-position: 8px center;padding-left: 40px;"<?}?>><?php echo $item['name']; ?></a>	
+<?if($item['type']=="category"){?>
+<?if($item['subtype']=="simple"){?>
+<div class="dropdown-menu megamenu-type-category-simple">
+<div class="dropdown-inner">
+<?php foreach (array_chunk($item['children'], ceil(count($item['children']) / 1)) as $children) { ?>
+<ul class="list-unstyled megamenu-haschild">
+<?php foreach ($children as $child) { ?>
+<li class="<?if(count($child['children'])){?> megamenu-issubchild<?}?> megamenu-issubchild-item"><a href="<?php echo $child['href']; ?>" class="simple-header"><?php echo $child['name']; ?></a>
+<?if(count($child['children'])){?>
+<ul class="list-unstyled megamenu-ischild megamenu-ischild-simple">
+<?php foreach ($child['children'] as $subchild) { ?>
+<li><a href="<?php echo $subchild['href']; ?>"><?php echo $subchild['name']; ?></a></li>				
+<?}?>
+</ul>
+<?}?>				
+</li>
+<?php } ?>
+</ul>
+<?php } ?>
+</div>            
+</div>
+<?}?>	
+<?}?>
+<?if($item['type']=="category"){?>
+<?if($item['subtype']=="full"){?>
+<div class="dropdown-menu megamenu-type-category-full megamenu-bigblock">
+<div class="dropdown-inner">
+<?php foreach (array_chunk($item['children'], ceil(count($item['children']) / 1)) as $children) { ?>
+<?if($item['add_html']){?>
+<div style="" class="menu-add-html">
+<?=$item['add_html'];?>
+</div>
+<?}?>
+<ul class="list-unstyled megamenu-haschild">
+<?php foreach ($children as $child) { ?>
+<li class="megamenu-parent-block<?if(count($child['children'])){?> megamenu-issubchild<?}?>"><a class="megamenu-parent-title" href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a>
+<?if(count($child['children'])){?>
+<ul class="list-unstyled megamenu-ischild">
+<?php foreach ($child['children'] as $subchild) { ?>
+<li><a href="<?php echo $subchild['href']; ?>"><?php echo $subchild['name']; ?></a></li>				
+<?}?>
+</ul>
+<?}?>				
+</li>
+<?php } ?>
+</ul>
+<?php } ?>
+</div>            
+</div>
+<?}?>	
+<?}?>
+<?if($item['type']=="category"){?>
+<?if($item['subtype']=="full_image"){?>
+<div class="dropdown-menu megamenu-type-category-full-image megamenu-bigblock">
+<div class="dropdown-inner">
+<?php foreach (array_chunk($item['children'], ceil(count($item['children']) / 1)) as $children) { ?>
+<?if($item['add_html']){?>
+<div style="" class="menu-add-html">
+<?=$item['add_html'];?>
+</div>
+<?}?>
+<script>
+            (function($) {
+                $(function() {
+                    $('#columns-ul').autocolumnlist({
+                        columns: 5,
+                        classname: 'col'
+                    });
+                })
+            })(jQuery)
+</script>
+<ul id="columns-ul" class="list-unstyled megamenu-haschild">
+<?php foreach ($children as $child) { ?>
+<li class="megamenu-parent-block<?if(count($child['children'])){?> megamenu-issubchild<?}?>">
+<a class="megamenu-parent-img" href="<?php echo $child['href']; ?>"><img src="<?php echo $child['thumb']; ?>" alt="" title=""/>
+<span><?php echo $child['name']; ?></span></a>
+<?if(count($child['children'])){?>
+<ul class="list-unstyled megamenu-ischild">
+<?php foreach ($child['children'] as $subchild) { ?>
+<li><a href="<?php echo $subchild['href']; ?>"><?php echo $subchild['name']; ?></a></li>				
+<?}?>
+</ul>
+<?}?>				
+</li>
+<?php } ?>
+</ul>
+<?php } ?>
+</div>            
+</div>
+<?}?>	
+<?}?>
+<?if($item['type']=="html"){?>
+<div class="dropdown-menu megamenu-type-html">
+<div class="dropdown-inner">
+<ul class="list-unstyled megamenu-haschild">
+<li class="megamenu-parent-block<?if(count($child['children'])){?> megamenu-issubchild<?}?>">
+<div class="megamenu-html-block">				
+<?=$item['html']?>
+</div>
+</li>
+</ul>
+</div>            
+</div>
+<?}?>
+<?if($item['type']=="manufacturer"){?>
+<div class="dropdown-menu megamenu-type-manufacturer <?if($item['add_html']){?>megamenu-bigblock<?}?>">
+<div class="dropdown-inner">
+<?php foreach (array_chunk($item['children'], ceil(count($item['children']) / 1)) as $children) { ?>
+<?if($item['add_html']){?>
+<div style="" class="menu-add-html">
+<?=$item['add_html'];?>
+</div>
+<?}?>
+<ul class="list-unstyled megamenu-haschild <?if($item['add_html']){?>megamenu-blockwithimage<?}?>">
+<?php foreach ($children as $child) { ?>
+<li class="megamenu-parent-block">
+<a class="megamenu-parent-img" href="<?php echo $child['href']; ?>"><img src="<?php echo $child['thumb']; ?>" alt="" title="" /></a>
+<a class="megamenu-parent-title" href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a>
+</li>
+<?php } ?>
+</ul>
+<?php } ?>
+</div>            
+</div>
+<?}?>
+<?if($item['type']=="information"){?>
+<div class="dropdown-menu megamenu-type-information <?if($item['add_html']){?>megamenu-bigblock<?}?>">
+<div class="dropdown-inner">
+<?php foreach (array_chunk($item['children'], ceil(count($item['children']) / 1)) as $children) { ?>
+<?if($item['add_html']){?>
+<div style="" class="menu-add-html">
+<?=$item['add_html'];?>
+</div>
+<?}?>
+<ul class="list-unstyled megamenu-haschild <?if($item['add_html']){?>megamenu-blockwithimage<?}?>">
+<?php foreach ($children as $child) { ?>
+<li class=""><a href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a>
+</li>
+<?php } ?>
+</ul>
+<?php } ?>
+</div>            
+</div>
+<?}?>
+<?if($item['type']=="product"){?>
+<div class="dropdown-menu megamenu-type-product <?if($item['add_html']){?>megamenu-bigblock<?}?>">
+<div class="dropdown-inner">
+<?php foreach (array_chunk($item['children'], ceil(count($item['children']) / 1)) as $children) { ?>
+<?if($item['add_html']){?>
+<div style="" class="menu-add-html">
+<?=$item['add_html'];?>
+</div>
+<?}?>
+<ul class="list-unstyled megamenu-haschild <?if($item['add_html']){?>megamenu-blockwithimage<?}?>">
+<?php foreach ($children as $child) { ?>
+<li class="megamenu-parent-block">
+<a class="megamenu-parent-img" href="<?php echo $child['href']; ?>"><img src="<?php echo $child['thumb']; ?>" alt="" title="" /></a>
+<a class="megamenu-parent-title" href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a>
+<div class="dropprice">
+<?if($child['special']){?><span><?}?><?php echo $child['price']; ?><?if($child['special']){?></span><?}?><?php echo $child['special']; ?>
+</div>				
+</li>
+<?php } ?>
+</ul>
+<?php } ?>
+</div>            
+</div>
+<?}?>
+<?if($item['type']=="auth"){?>
+<div class="dropdown-menu megamenu-type-auth">
+<div class="dropdown-inner">
+<ul class="list-unstyled megamenu-haschild">
+<li class="megamenu-parent-block<?if(count($child['children'])){?> megamenu-issubchild<?}?>">
+<div class="megamenu-html-block">				
+<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+<div class="auth_login">
+<label class="control-label" for="input-email"><?php echo $entry_email; ?></label>
+<input type="text" name="email" value="" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
+</div>  
+<div class="auth_pass">
+<label class="control-label" for="input-password"><?php echo $entry_password; ?></label>
+<input type="password" name="password" value="" placeholder="<?php echo $entry_password; ?>" id="input-password" class="form-control" />
+</div>	
+<div class="auth_links">
+<a href="<?php echo $forgotten; ?>"><?php echo $text_forgotten; ?></a>
+<a href="<?php echo $register; ?>"><?php echo $text_register; ?></a>
+</div>	
+<input type="submit" value="<?php echo $button_login; ?>" class="button" />
+</form>
+</div>
+</li>
+</ul>
+</div>            
+</div>
+<?}?>
+</li>
+<?php } else { ?>
+<li><a href="<?php echo $item['href']; ?>"><?php echo $item['name']; ?></a></li>
+<?php } ?>
+<?php } ?>		
+</ul>
+</nav>
+<?}?>
+<?php if ($categories && !$use_megamenu) { ?>
+]]></add>
+</operation>
+		
+</file>
+<file name="catalog/controller/common/header.php">
+<operation>
+<search position="replace"><![CDATA[
+$this->children = array(
+]]></search>
+<add><![CDATA[
+###
+if($this->config->get('megamenu_status')=="1")
+{
+$this->language->load('module/megamenu');
+$this->load->model('tool/megamenu');
+$this->load->model('catalog/category');
+$this->load->model('catalog/product');
+$this->data['heading_title'] = $this->language->get('heading_title');		
+$this->data['items']=array();
+$tmp_items= $this->model_tool_megamenu->getItems();
+		if(count($tmp_items))
+		{
+			foreach($tmp_items as $item){
+			if($item['menu_type']=="category")	{
+			$this->data['items'][]=$this->model_tool_megamenu->parseCategory($item);
+			}
+			if($item['menu_type']=="html")	{
+			$this->data['items'][]=$this->model_tool_megamenu->parseHtml($item);
+			}
+			if($item['menu_type']=="manufacturer")	{
+			$this->data['items'][]=$this->model_tool_megamenu->parseManufacturer($item);
+			}
+			if($item['menu_type']=="information")	{
+			$this->data['items'][]=$this->model_tool_megamenu->parseInformation($item);
+			}
+			if($item['menu_type']=="product")	{
+			$this->data['items'][]=$this->model_tool_megamenu->parseProduct($item);
+			}	
+            if($item['menu_type']=="link")	{
+			$this->data['items'][]=$this->model_tool_megamenu->parseLink($item);
+			}
+			if($item['menu_type']=="auth" && !$this->customer->isLogged())	{
+			$this->data['items'][]=$this->model_tool_megamenu->parseAuth($item);
+			}
+				
+				
+			}	
+		}
+		
+		//auth
+		$this->load->language('account/login');
+		$this->load->language('module/megamenu');
+		$this->data['entry_email'] = $this->language->get('entry_email');
+		$this->data['entry_password'] = $this->language->get('entry_password');
+		$this->data['text_forgotten'] = $this->language->get('text_forgotten');
+		$this->data['text_register'] = $this->language->get('text_register');
+		$this->data['menu_title'] = $this->language->get('menu_title');
+		
+		$this->data['button_login'] = $this->language->get('button_login');
+		$this->data['action'] = $this->url->link('account/login', '', 'SSL');
+		$this->data['email'] = "";
+		$this->data['register'] = $this->url->link('account/register', '', 'SSL');
+		$this->data['forgotten'] = $this->url->link('account/forgotten', '', 'SSL');
+		$this->data['use_megamenu']=1;
+	    }
+		else
+		$this->data['use_megamenu']=0;
+		###
+		
+			$this->children = array(
+			]]></add>
+</operation>
+</file>
+</modification>

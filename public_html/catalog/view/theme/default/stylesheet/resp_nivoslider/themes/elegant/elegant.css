@@ -1,0 +1,190 @@
+/*
+Skin Name: Nivo Slider Elegant Theme
+Version: 1.0
+Author: iDiY
+Author e-mail: idiy.webmaster@gmail.com
+Supports Thumbs: true
+*/
+
+.theme-elegant {
+	position: relative;
+	margin-bottom: 20px;
+}
+
+.theme-elegant:before,.theme-elegant:after {
+	display: table;
+	content: "";
+	line-height: 0;
+}
+
+.theme-elegant .nivoSlider {
+    margin: 0;
+    padding:155px 0 0 0;
+    background: #fff url(loading.gif) no-repeat 50% 50%;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    -khtml-border-radius: 7px;
+    border-radius: 7px;
+}
+.theme-elegant .nivoSlider > div {
+
+}
+.theme-elegant .nivoSlider img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+}
+
+.theme-elegant .nivoSlider a {
+	display: block;
+	border: 0;
+}
+
+.theme-elegant .nivo-controlNav {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    left: 0;
+    bottom: 3%;
+    z-index: 10;
+    padding: 0;
+    font-size: 0;
+    line-height: 0;
+}
+
+.theme-elegant .nivo-controlNav a {
+    display: inline-block;
+    position: relative;
+    margin: 4px;
+    width: 20px;
+    height: 20px;
+    text-indent: -9999px;
+    border: 2px solid #fff;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -khtml-border-radius: 50%;
+    border-radius: 50%;
+}
+.theme-elegant .nivo-controlNav a:before, .theme-elegant .nivo-controlNav a.active:before {
+    position: absolute;
+    content: "";
+    width: 12px;
+    height: 12px;
+    top: 50%;
+    margin-top: -6px;
+    left: 50%;
+    margin-left: -6px;
+    background: #fff;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -khtml-border-radius: 50%;
+    border-radius: 50%;
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+}
+.theme-elegant .nivo-controlNav a:before {
+    background: rgba(0,0,0,.3);
+	width: 100%;
+	height: 100%;
+	margin-top: -8px;
+	margin-left: -8px;
+}
+
+.theme-elegant .nivo-controlNav.nivo-thumbs-enabled {
+	right: auto;
+	margin: 0;
+	width: 100%;
+}
+
+.theme-elegant .nivo-controlNav.nivo-thumbs-enabled a {
+	margin: 0 4px;
+	width: auto;
+	height: auto;
+	outline: none;
+	border: 2px solid rgba(255,255,255,0.5);
+	background: none;
+
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+.theme-elegant .nivo-controlNav.nivo-thumbs-enabled a:hover,.theme-elegant .nivo-controlNav.nivo-thumbs-enabled a.active {
+	border: 2px solid #FFF;
+}
+
+.theme-elegant .nivo-controlNav.nivo-thumbs-enabled img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+.nivo-directionNav {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 150px;
+    height: 62px;
+    background: rgba(0,0,0,.3);
+    z-index: 11;
+	text-align: center;
+	-webkit-border-radius: 0 0 0 7px;
+    -moz-border-radius: 0 0 0 7px;
+    -khtml-border-radius: 0 0 0 7px;
+    border-radius: 0 0 0 7px;
+}
+.theme-elegant .nivo-directionNav a {
+    display: inline-block !important;
+    vertical-align: middle;
+    position: relative;
+    top: auto;
+    height: 40px;
+    width: 40px;
+    margin: 10px 5px 0 5px;
+    border: 1px solid transparent;
+    text-indent: -99999px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -khtml-border-radius: 50%;
+    border-radius: 50%;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+}
+.theme-elegant a.nivo-prevNav {
+    background: url('btn_prev.png') center center no-repeat;
+    background-size: 13px;
+}
+.theme-elegant a.nivo-nextNav {
+    background: url('btn_next.png') center center no-repeat;
+    background-size: 13px;
+}
+.theme-elegant a.nivo-prevNav:hover, .theme-elegant a.nivo-nextNav:hover {
+    transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    opacity: .9;
+    filter: alpha(opacity=90);
+    border-color: #fff;
+}
+
+.theme-elegant .nivo-caption h1 {
+	margin-bottom: 10px;
+	color: white;
+	text-shadow: 1px 1px rgba(0,0,0,.65);
+	font-weight: bold;
+	font-size: 24px;
+}
+
+.theme-elegant .nivo-caption p {
+	margin-bottom: 15px;
+	color: white;
+	text-shadow: 1px 1px rgba(0,0,0,.65);
+	font-style: italic;
+	font-weight: bold;
+}
+
+.theme-elegant .nivo-caption a.button {
+	display: inline-block !important;
+}

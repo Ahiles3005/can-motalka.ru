@@ -1,0 +1,146 @@
+/*
+ * jQuery Nivo Slider v3.2
+ * http://nivo.dev7studios.com
+ *
+ * Copyright 2012, Dev7studios
+ * Free to use and abuse under the MIT license.
+ * http://www.opensource.org/licenses/mit-license.php
+ */
+ 
+/* The Nivo Slider styles */
+.nivoSlider {
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+	height: 500px;
+}
+
+.nivoSlider img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	max-width: none;
+}
+
+.nivo-main-image {
+	position: relative !important;
+	display: block !important;
+	width: 100% !important;
+}
+
+/* If an image is wrapped in a link */
+.nivoSlider a.nivo-imageLink {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 9;
+	display: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	border: 0;
+}
+
+/* The slices and boxes in the Slider */
+.nivo-slice {
+	position: absolute;
+	top: 0;
+	z-index: 5;
+	display: block;
+	height: 100%;
+}
+
+.nivo-box {
+	position: absolute;
+	z-index: 5;
+	display: block;
+	overflow: hidden;
+}
+
+.nivo-box img {
+	display: block;
+}
+
+/* Caption styles */
+.nivo-caption {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 8;
+    display: none;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+
+.nivo-caption p {
+	margin: 0;
+	padding: 5px 0;
+}
+
+.nivo-caption a {
+	display: inline !important;
+}
+
+.nivo-html-caption {
+	display: none;
+}
+
+/* Direction nav styles (e.g. Next & Prev) */
+.nivo-directionNav a {
+	position: absolute;
+	top: 45%;
+	z-index: 10;
+	cursor: pointer;
+}
+
+.nivo-prevNav {
+	left: 0;
+}
+
+.nivo-nextNav {
+	right: 0;
+}
+
+/* Control nav styles (e.g. 1,2,3...) */
+.nivo-controlNav {
+	padding: 15px 0;
+	text-align: center;
+}
+
+.nivo-controlNav a {
+	cursor: pointer;
+}
+
+.nivo-controlNav a.active {
+	font-weight: bold;
+}
+/*titles*/
+.tit-m, .tit-m2, .tit-b {
+    position: absolute;
+    top: 50px;
+    left: 90px;
+    font-size: 24px;
+    color: #fff;
+    padding: 10px 30px;
+}
+.tit-m2 {
+    top: 200px;
+}
+.tit-b {
+    top: 125px;
+    text-transform: uppercase;
+    font-size: 28px;
+    font-weight: 400;
+}
+/*end-titles*/
+/*colors*/
+.brown {
+    background: rgba(156,110,53,0.7);
+}
+.black {
+    background: rgba(0,0,0, .6);
+}
+/*end-colors*/
