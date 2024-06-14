@@ -13,6 +13,48 @@
 <?php echo $content_top; ?>
   <div class="main-content successcont white inform-page">
   <p><?php echo $order_text; ?></p><span class="deal"><span></span><span></span></span><span class="ok"></span>
+    <?php
+    if($send_confirm_code):
+    ?>
+    <form action="<?php echo $confirm_code_url; ?>">
+
+    </form>
+
+    <div data-action="<?=$confirm_code_url?>" data-method="post" data-enctype="multipart/form-data"
+         id="confirmCodeForm">
+      <h3>Подтвердите заказ</h3>
+      <label for="confirmCode"><b>Код подтверждения:</b></label>
+      <input name="code" id="confirmCode" type="text">
+      <a href="#" class="button" id="confirmOrder">Подтвердить</a>
+    </div>
+    <br>
+    <br>
+
+    <script>
+      $('#confirmOrder').on("click", function (e) {
+        e.preventDefault();
+        var $form = $('#confirmCodeForm');
+        $.ajax({
+          url: $form.data("action"),
+          type: $form.data("method"),
+          data: {
+            "code": $("#confirmCode").val()
+          },
+          success: function (text) {
+            let data = JSON.parse(text);
+            if(data.status){
+              $('#confirmCodeForm').html('<h2>Заказ подтвержден</h2>')
+            }else{
+              $('#confirmCode').css({border:'2px solid red'} )
+              console.log($('#confirmCode'));
+            }
+          }
+        });
+        // $('#prstTestSmsForm').submit
+      });
+    </script>
+
+    <?php endif;?>
     <a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a>
   </div>
   <div class="bottom"></div>

@@ -87,7 +87,17 @@ class ControllerCheckoutSuccess extends Controller {
 			'common/footer',
 			'common/header'			
 		);
-				
+
+        $this->data['send_confirm_code'] = false;
+        $this->load->model("module/prosto_sms");
+
+        if($this->model_module_prosto_sms->isInstalled()){
+            $this->load->model('setting/setting');
+            $setting = $this->model_setting_setting->getSetting('prosto_sms');
+            $this->data['send_confirm_code'] = $setting['sendConfirmCode'];
+            $this->data['confirm_code_url'] = $this->url->link('module/prosto_sms/validate_code', 'token=' . $this->session->data['token'], 'SSL');
+        }
+
 		$this->response->setOutput($this->render());
   	}
 }

@@ -26,6 +26,14 @@
         <textarea name="prstMsg" id="prstMsg" cols="80" rows="12"><?=$setting['prstMsg']?></textarea>
         <div>#USERNAME#, #PHONE#, #ORDER_NUM#</div>
           <hr>
+
+          <h3>Подтверждения заказа</h3>
+          <label for="sendConfirmCode">Отправлять код подтверждения заказа:</label>
+          <input type="checkbox" name="sendConfirmCode" id="sendConfirmCode" size="80" value="1" <?=$setting['sendConfirmCode']==1 ? 'checked' : '' ?> />
+          <br>
+          <label for="sendConfirmCodeEmail">Почта куда отправлять уведомление о подтверждение заказа:</label><br>
+          <input type="text" name="sendConfirmCodeEmail" id="sendConfirmCodeEmail" size="80" value="<?=$setting['sendConfirmCodeEmail']?>"/>
+          <hr>
       </form>
         <h3>Тестовое сообщение</h3>
           <div data-action="<?=$testLink?>" data-method="post" data-enctype="multipart/form-data" id="prstTestSmsForm">
@@ -37,8 +45,11 @@
           <a href="#" class="button" id="prstTestSmsBtn">Отправить СМС</a>
       </div>
 
+
+
   </div>
     <script>
+
         $('#prstTestSmsBtn').on("click", function(e){
             e.preventDefault();
             var $form = $('#prstTestSmsForm');

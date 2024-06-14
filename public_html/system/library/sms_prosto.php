@@ -130,6 +130,10 @@ class SmsProsto {
             $setting["prstMsg"]
         );
 
+        if (array_key_exists('sendConfirmCode', $setting)) {
+            $msg .= 'Код подтверждения заказа: ' . self::getConfirmCode($args["order_num"], $args["phone"]);
+        }
+
         $res = SmsProsto::pushMsgKey($setting["prstKey"], $args["phone"], $msg);
         if(isset($res["error"])){
             return false;
@@ -141,4 +145,10 @@ class SmsProsto {
     public static function test(){
         echo "test";
     }
+
+    public static function getConfirmCode($order_num, $phone)
+    {
+        return $order_num.substr($phone,-2);
+    }
+
 }
