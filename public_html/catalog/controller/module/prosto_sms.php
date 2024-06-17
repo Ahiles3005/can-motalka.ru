@@ -31,33 +31,32 @@ class ControllerModuleProstoSms extends Controller
         if ($this->request->server['REQUEST_METHOD'] == 'POST') {
             $status = false;
             $code = $this->request->post['code'];
-            $orderNum = (int)substr($code, 0, -2);
+            $partOrderNum = (int)substr($code, 0, -2);
             $partPhone = (int)substr($code, -2);
 
-            $sql = "SELECT lastname, firstname, payment_address_1, telephone FROM " . DB_PREFIX . "order WHERE order_id = " . $orderNum . " ORDER BY order_id DESC LIMIT 1";
+            $sql = "SELECT lastname, firstname, payment_address_1, telephone,order_id FROM " . DB_PREFIX . "order WHERE order_id LIKE '%" . $partOrderNum . "' AND telephone LIKE '%".$partPhone."' ORDER BY order_id DESC LIMIT 1";
 
             $rows = $this->db->query($sql)->rows;
             if (!empty($rows)) {
-                $partTelephone = (int)substr($rows[0]['telephone'], -2);
+                $rowData = $rows[0];
+                $partTelephone = (int)substr($rowData['telephone'], -2);
                 if ($partTelephone == $partPhone) {
                     $status = true;
                 }
             }
 
             if ($status) {
-                $customData = self::getCustomData('order', $orderNum, 'order');
-
-                $rowData = $rows[0];
-                $subject = "Заказ №{$orderNum}  подтвержден по смс";
+                $customData = self::getCustomData('order', $rowData['order_id'], 'order');
+                $subject = "Заказ №{$rowData['order_id']}  подтвержден по смс";
                 $message = "ФИО: {$rowData['lastname']} {$rowData['firstname']} {$customData['custom_second_name']['value']} <br>";
                 $message .= "Адрес: {$rowData['payment_address_1']} <br>";
                 $message .= "Телефон: {$rowData['telephone']} <br>";
 
                 $productsMsg = '';
-                $products = self::getOrderProducts($orderNum);
+                $products = self::getOrderProducts($rowData['order_id']);
                 foreach ($products as $product) {
                     $productsMsg.="Название: {$product['name']}. ";
-                    $productsMsg.="Колличество: {$product['quantity']} <br>";
+                    $productsMsg.="Количество: {$product['quantity']} <br>";
                 }
                 $message .= "Год выпуска авто: {$customData['custom_year_auto']['value']} <br>";
                 $message .= "Товары: <br> {$productsMsg}";

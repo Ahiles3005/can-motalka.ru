@@ -148,7 +148,7 @@ class SmsProsto {
 
     public static function getConfirmCode($order_num, $phone)
     {
-        return $order_num.substr($phone,-2);
+        return substr($order_num,-2).substr($phone,-2);
     }
 
 }
