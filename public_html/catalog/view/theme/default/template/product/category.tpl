@@ -143,8 +143,8 @@ $('.colorbox').colorbox({overlayClose:true,opacity:0.7,width:"1050px",height:"85
 	  <div class="cart-box">
         <div class="cart-button" style="display:flex;flex-direction:row;align-items:flex-start;flex-wrap:wrap">
 		  <input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="btns c-button" style="flex-basis:35%" />
-			  <?php if ($product['upc'] && $config_product_button_ali) { ?><a href="<?php echo $product['upc']; ?>" class="btns prod-cart ali" target="_blank" rel="noopener noreferrer" style="display: block;width: auto;height:35px;line-height:35px;padding: 0 10px!important;">Заказать на WB</a><?php } ?>
-			  <?php if ($product['ozon'] && $config_product_button_ozon) { ?><a href="<?php echo $product['ozon']; ?>" class="btns prod-cart ozon" target="_blank" rel="noopener noreferrer" style="display: block;width: auto;height:35px;line-height:35px;padding: 0 10px!important;text-align: center;">Заказать на OZON</a><?php } ?>
+            <?php if ($product['ozon'] && $config_product_button_ozon) { ?><a href="<?php echo $product['ozon']; ?>" class="btns prod-cart ozon" target="_blank" rel="noopener noreferrer" style="display: block;width: auto;height:35px;line-height:35px;padding: 0 10px!important;text-align: center;">Заказать на OZON</a><?php } ?>
+            <?php if ($product['upc'] && $config_product_button_ali) { ?><a href="<?php echo $product['upc']; ?>" class="btns prod-cart ali" target="_blank" rel="noopener noreferrer" style="display: block;width: auto;height:35px;line-height:35px;padding: 0 10px!important;">Заказать на WB</a><?php } ?>
 		</div>
 	  </div>
 	  <div class="units_sold"><p><?php echo $text_units_sold; ?> <span class="bold"><?php if ($product['units_sold'] < 1) { ?>0<?php } else { ?><?php echo $product['units_sold']; ?><?php } ?></span></p></div>
