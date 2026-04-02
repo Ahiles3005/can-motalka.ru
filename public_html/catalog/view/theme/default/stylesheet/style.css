@@ -1,6 +1,14 @@
 
 /*Custom css*/
 
+#tab-description {
+	max-width: calc(100vw - 75px);
+}
+#tab-description iframe {
+	max-width: 100%;
+	height: auto;
+	min-height: 200px;
+}
 /* hide logo catalog category */
 .category-list > div > .left img
 {

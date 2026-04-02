@@ -99,6 +99,9 @@ if (isset($this->request->get['page'])) {
 		} else {
 			$category_id = 0;
 		}
+		
+		$this->data['config_product_button_ozon'] = $this->config->get('config_product_button_ozon');
+		$this->data['config_product_button_ali'] = $this->config->get('config_product_button_ali');
 				
 		$category_info = $this->model_catalog_category->getCategory($category_id);
 	

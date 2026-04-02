@@ -36,8 +36,8 @@
 	<div class="cart-box-action">
 		<input type="button" value="Заказать на сайте" class="btns prod-cart" onclick="addToCart('<?=$product_id?>');" title="" />
 		<input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
-		<?php if ($ozon) { ?><a href="<?php echo $ozon; ?>" class="btns prod-cart ozon<?if ($upc) {?> my_half<?}?>" target="_blank" rel="noopener noreferrer">Заказать на OZON</a><?php } ?>
-		<?php if ($upc) { ?><a href="<?php echo $upc; ?>" class="btns prod-cart ali<?if ($ozon) {?> my_half<?}?>" target="_blank" rel="noopener noreferrer">Заказать на AliExpress</a><?php } ?>
+		<?php if ($ozon && $config_product_button_ozon) { ?><a href="<?php echo $ozon; ?>" class="btns prod-cart ozon<?if ($upc) {?> my_half<?}?>" target="_blank" rel="noopener noreferrer">Заказать на OZON</a><?php } ?>
+		<?php if ($upc && $config_product_button_ali) { ?><a href="<?php echo $upc; ?>" class="btns prod-cart ali<?if ($ozon) {?> my_half<?}?>" target="_blank" rel="noopener noreferrer">Заказать на AliExpress</a><?php } ?>
 	</div>
 </div>
 <style type="text/css">
@@ -356,8 +356,8 @@
 			<div class="cart-box-action">
 			<input type="button" value="Заказать на сайте<?//php echo $button_cart; ?>" id="button-cart" class="btns prod-cart" title="" />
 			<input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
-      <?php if ($ozon) { ?><a href="<?php echo $ozon; ?>" class="btns prod-cart ozon" target="_blank" rel="noopener noreferrer">Заказать на OZON</a><?php } ?>
-      <?php if ($upc) { ?><a href="<?php echo $upc; ?>" class="btns prod-cart ali" target="_blank" rel="noopener noreferrer">Заказать с AliExpress</a><?php } ?>
+      <?php if ($ozon && $config_product_button_ozon) { ?><a href="<?php echo $ozon; ?>" class="btns prod-cart ozon" target="_blank" rel="noopener noreferrer">Заказать на OZON</a><?php } ?>
+      <?php if ($upc && $config_product_button_ali) { ?><a href="<?php echo $upc; ?>" class="btns prod-cart ali" target="_blank" rel="noopener noreferrer">Заказать с AliExpress</a><?php } ?>
 			<?//<a href="javascript:void(0);" data-modal="cback-id" class="cback-form-open" onclick="return false;">Заказать консультацию</a>?>
 			</div>
 		  </div>

@@ -417,6 +417,8 @@ class ControllerProductProduct extends Controller {
 			$this->data['sku'] = $product_info['sku'];
 			$this->data['upc'] = $product_info['upc'];
 			$this->data['ozon'] = $product_info['ozon'];
+			$this->data['config_product_button_ozon'] = $this->config->get('config_product_button_ozon');
+			$this->data['config_product_button_ali'] = $this->config->get('config_product_button_ali');
 			$this->data['ean'] = $product_info['ean'];
 			$this->data['jan'] = $product_info['jan'];
 			$this->data['isbn'] = $product_info['isbn'];

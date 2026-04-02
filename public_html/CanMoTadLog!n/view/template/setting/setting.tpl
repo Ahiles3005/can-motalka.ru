@@ -613,20 +613,48 @@
         </div>
 		<div id="tab-product" class="settabs-content">
 			<table class="form">
-			  <tr class="d-none">
-				<td><?php echo $entry_product_quick_edit; ?></td>
-				<td><?php if ($config_product_quick_edit) { ?>
-				  <input type="radio" name="config_product_quick_edit" value="1" checked="checked" />
-				  <?php echo $text_yes; ?>
-				  <input type="radio" name="config_product_quick_edit" value="0" />
-				  <?php echo $text_no; ?>
-				  <?php } else { ?>
-				  <input type="radio" name="config_product_quick_edit" value="1" />
-				  <?php echo $text_yes; ?>
-				  <input type="radio" name="config_product_quick_edit" value="0" checked="checked" />
-				  <?php echo $text_no; ?>
-				  <?php } ?></td>
-			  </tr>
+        <tr class="">
+        <td>Включить вывод кнопок перехода на ОЗОН на всем сайте?<br><span class="help">Если опция включена, то кнопки выводятся в противном случае кнопки выводиться не будут.</span></td>
+        <td><?php if ($config_product_button_ozon) { ?>
+          <input type="radio" name="config_product_button_ozon" value="1" checked="checked" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_product_button_ozon" value="0" />
+          <?php echo $text_no; ?>
+          <?php } else { ?>
+          <input type="radio" name="config_product_button_ozon" value="1" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_product_button_ozon" value="0" checked="checked" />
+          <?php echo $text_no; ?>
+          <?php } ?></td>
+        </tr>
+        <tr class="">
+        <td>Включить вывод кнопок перехода на АЛИЭКСПРЕСС на всем сайте?<br><span class="help">Если опция включена, то кнопки выводятся в противном случае кнопки выводиться не будут.</span></td>
+        <td><?php if ($config_product_button_ali) { ?>
+          <input type="radio" name="config_product_button_ali" value="1" checked="checked" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_product_button_ali" value="0" />
+          <?php echo $text_no; ?>
+          <?php } else { ?>
+          <input type="radio" name="config_product_button_ali" value="1" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_product_button_ali" value="0" checked="checked" />
+          <?php echo $text_no; ?>
+          <?php } ?></td>
+        </tr>
+        <tr class="d-none">
+        <td><?php echo $entry_product_quick_edit; ?></td>
+        <td><?php if ($config_product_quick_edit) { ?>
+          <input type="radio" name="config_product_quick_edit" value="1" checked="checked" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_product_quick_edit" value="0" />
+          <?php echo $text_no; ?>
+          <?php } else { ?>
+          <input type="radio" name="config_product_quick_edit" value="1" />
+          <?php echo $text_yes; ?>
+          <input type="radio" name="config_product_quick_edit" value="0" checked="checked" />
+          <?php echo $text_no; ?>
+          <?php } ?></td>
+        </tr>
 		      <tr>
                 <td><?php echo $entry_review; ?></td>
                 <td><?php if ($config_review_status) { ?>

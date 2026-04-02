@@ -697,6 +697,18 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_admin_limit'] = $this->config->get('config_admin_limit');
 		}
 		
+		if (isset($this->request->post['config_product_button_ali'])) {
+			$this->data['config_product_button_ali'] = $this->request->post['config_product_button_ali'];
+		} else {
+			$this->data['config_product_button_ali'] = $this->config->get('config_product_button_ali');
+		}
+		
+		if (isset($this->request->post['config_product_button_ozon'])) {
+			$this->data['config_product_button_ozon'] = $this->request->post['config_product_button_ozon'];
+		} else {
+			$this->data['config_product_button_ozon'] = $this->config->get('config_product_button_ozon');
+		}
+		
 		if (isset($this->request->post['config_product_quick_edit'])) {
 			$this->data['config_product_quick_edit'] = $this->request->post['config_product_quick_edit'];
 		} else {
