@@ -37,7 +37,7 @@
 		<input type="button" value="Заказать на сайте" class="btns prod-cart" onclick="addToCart('<?=$product_id?>');" title="" />
 		<input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
 		<?php if ($ozon && $config_product_button_ozon) { ?><a href="<?php echo $ozon; ?>" class="btns prod-cart ozon<?if ($upc) {?> my_half<?}?>" target="_blank" rel="noopener noreferrer">Заказать на OZON</a><?php } ?>
-		<?php if ($upc && $config_product_button_ali) { ?><a href="<?php echo $upc; ?>" class="btns prod-cart ali<?if ($ozon) {?> my_half<?}?>" target="_blank" rel="noopener noreferrer">Заказать на AliExpress</a><?php } ?>
+		<?php if ($upc && $config_product_button_ali) { ?><a href="<?php echo $upc; ?>" class="btns prod-cart ali<?if ($ozon) {?> my_half<?}?>" target="_blank" rel="noopener noreferrer">Заказать на WB</a><?php } ?>
 	</div>
 </div>
 <style type="text/css">
