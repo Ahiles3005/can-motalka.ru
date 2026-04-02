@@ -80,9 +80,9 @@
 			<a href="<?php echo $product['ozon']; ?>" class="btns prod-cart ozon" target="_blank" rel="noopener noreferrer" style="margin:1rem !important">Заказать на OZON</a>
 		<?php } ?>
 		<?php if ($ali) { ?>
-			<a href="<?php echo $ali; ?>" class="btns prod-cart ali" target="_blank" rel="noopener noreferrer" style="margin:1rem !important">Заказать на AliExpress</a>
+			<a href="<?php echo $ali; ?>" class="btns prod-cart ali" target="_blank" rel="noopener noreferrer" style="margin:1rem !important">Заказать на WB</a>
 		<?php } else if (isset($products[0]['ali']) && !empty($products[0]['ali'])) { ?>
-			<a href="<?php echo $product['ali']; ?>" class="btns prod-cart ali" target="_blank" rel="noopener noreferrer" style="margin:1rem !important">Заказать на AliExpress</a>
+			<a href="<?php echo $product['ali']; ?>" class="btns prod-cart ali" target="_blank" rel="noopener noreferrer" style="margin:1rem !important">Заказать на WB</a>
 		<?php } ?>
 
 </div>
